@@ -36,13 +36,14 @@ VideoTube/
 │   ├── controllers/
 │   ├── config/
 │   ├── middleware/
-│   ├── server.js
+│   ├── index.js
+│
 │── frontend/
 │   ├── src/
 │   ├── components/
 │   ├── pages/
 │   ├── redux/
 │   ├── App.js
-│── package.json
+│
 │── README.md
 ```
