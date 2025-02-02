@@ -47,3 +47,7 @@ VideoTube/
 │
 │── README.md
 ```
+
+## DATABASE DESIGN
+![Alt Text](Backend/src/utils/DbDesign.png)
+
