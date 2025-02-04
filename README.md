@@ -49,5 +49,9 @@ VideoTube/
 ```
 
 ## DATABASE DESIGN
+<<<<<<< HEAD
 ![Alt Text](Backend/src/utils/DbDesign.png)
+=======
+![DB DESIGN IMAGE](Backend/src/utils/DbDesign.png)
+>>>>>>> a4481b755087f9dfd97f74a6ac0bcc162ee47753
 
