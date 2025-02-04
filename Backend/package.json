@@ -12,15 +12,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-<<<<<<< HEAD
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-=======
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
->>>>>>> a4481b755087f9dfd97f74a6ac0bcc162ee47753
     "mongoose": "^8.9.6"
   }
 }
