@@ -4,6 +4,7 @@ import connectDB from "./DB/dbConnect.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import passport from "passport"
+import userRoute from "./routes/userRoute.js"
 
 dotenv.config(
     {
@@ -25,7 +26,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(passport.initialize())
 
-//connectDB();
+//routes
+app.use("/api/user", userRoute)
+
+connectDB();
 
 app.listen(port, () => {
     console.log(`App is running on : http://localhost:${port}`);
