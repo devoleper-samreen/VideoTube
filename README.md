@@ -19,8 +19,6 @@ VideoTube is a full-stack video-sharing platform built using the MERN (MongoDB, 
 - **Authentication**: JWT (JSON Web Token), google auth
 - **Storage**: Cloudinary / Firebase (for video storage)
 
-
-
 ## Usage
 1. Register/Login as a user.
 2. Upload videos and manage your content.
