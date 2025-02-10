@@ -141,10 +141,82 @@ export const verifyEmail = async (req, res) => {
 
 }
 //login
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        if (!email || !password) {
+            return res.status(400).json({
+                status: "failed",
+                message: "all feilds are requred"
+            })
+        }
+
+        const user = await User.findOne({ email })
+
+        if (!user) {
+            return res.status(401).json({
+                status: "failed",
+                message: "invalid email or password"
+            })
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password)
+
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                status: "failed",
+                message: "invalid email or password"
+            })
+        }
+
+        if (!user.isVerified) {
+            return res.status(400).json({
+                status: "failed",
+                message: "email not verified"
+            })
+        }
+
+        const accessToken = jwt.sign({
+            userId: user._id
+        },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        )
+        const refreshToken = jwt.sign({
+            userId: user._id
+        },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        )
+
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            maxAge: 1 * 60 * 60 * 1000
+        })
+
+
+        res.status(200).json({
+            status: "success",
+            message: "login successful",
+            accessToken,
+            refreshToken
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "login error",
+            error: error
+        })
+    }
+}
+
 //get accesstoken and refreshtoken
 //change password
 //send password reset email
 //reset email
 //logout
+
 //profile
 
