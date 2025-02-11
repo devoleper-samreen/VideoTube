@@ -155,6 +155,7 @@ export const verifyEmail = async (req, res) => {
 //login
 export const login = async (req, res) => {
     try {
+        console.log("login called");
         const { email, password } = req.body
 
         if (!email || !password) {
@@ -163,8 +164,10 @@ export const login = async (req, res) => {
                 message: "all feilds are requred"
             })
         }
+        console.log("email and password checked");
 
         const user = await User.findOne({ email })
+        console.log("user found");
 
         if (!user) {
             return res.status(401).json({
@@ -172,8 +175,10 @@ export const login = async (req, res) => {
                 message: "invalid email or password"
             })
         }
+        console.log("user found again");
 
         const isPasswordValid = await bcrypt.compare(password, user.password)
+        console.log("password checked");
 
         if (!isPasswordValid) {
             return res.status(401).json({
@@ -181,6 +186,7 @@ export const login = async (req, res) => {
                 message: "invalid email or password"
             })
         }
+        console.log("password is valid");
 
         if (!user.isVerified) {
             return res.status(400).json({
@@ -188,30 +194,37 @@ export const login = async (req, res) => {
                 message: "email not verified"
             })
         }
+        console.log("email verified");
 
         const accessToken = generateAccessToken(user)
         const refreshToken = generateRefreshToken(user)
+        console.log("tokens generated");
 
         user.refreshToken = refreshToken
+        console.log("refresh token added to user");
         await user.save({ validateBeforeSave: false })
+        console.log("user saved");
 
         //send cookie
         const options = {
             httpOnly: true,
             secure: true
         }
+        console.log("options set");
 
-        return res.status(200).
-            cookie("accessToken", accessToken, options).
-            cookie("refeshToken", refreshToken, options).
-            json({
-                user: loggedInUser,
-                accessToken,
-                refreshToken
-            })
+        return res.status(200)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", refreshToken, options)
+            .json({
+                user: user,
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            });
+
 
     } catch (error) {
         res.status(500).json({
+            status: "failed",
             message: "login error",
             error: error
         })
@@ -221,6 +234,9 @@ export const login = async (req, res) => {
 //logout
 export const logout = async (req, res) => {
     try {
+        console.log("logout called");
+        console.log("logout called", req.user);
+
         await User.findByIdAndUpdate(
             req.user._id,
             {
@@ -232,9 +248,10 @@ export const logout = async (req, res) => {
                 new: true
             }
         )
-
+        console.log("user updated");
         res.clearCookie("accessToken")
         res.clearCookie("refreshToken")
+        console.log("cookies cleared");
 
         return res.status(200).json({
             status: "success",
