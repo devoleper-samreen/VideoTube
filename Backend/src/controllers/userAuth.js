@@ -10,20 +10,25 @@ export const registration = async (req, res) => {
         const { name, email, password } = req.body
 
         if (!(name && email && password)) {
-            return res.status(400).json(new ApiError(400, "All fields are required"));
+            return res.status(400).json({
+                status: "failed",
+                message: "All fields are required"
+            });
         }
 
-        //check user already exisxt
+        //check user already exists
         const existingUser = await User.findOne({ email })
 
         if (existingUser) {
-            return res.status(409).json(new ApiError(409, "Email already exists"));
+            return res.status(409).json({
+                status: "failed",
+                message: "Email already exists"
+            });
         }
 
         //password hashing
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
-
 
         //create user
         const newUser = await User.create({
@@ -35,24 +40,31 @@ export const registration = async (req, res) => {
         const savedUser = await newUser.save();
 
         if (!savedUser) {
-            return res.status(500).json(new ApiError(500, "Error in creating user"));
-
+            return res.status(500).json({
+                status: "failed",
+                message: "Error in creating user"
+            });
         }
+
         console.log("otp before");
-
-
         await sendEmailOTP(req, newUser);
         console.log("otp after");
 
-        res.status(201).json(new ApiResponse(201, "user create seuccess", newUser))
-
+        res.status(201).json({
+            status: "success",
+            message: "User created successfully",
+            user: newUser
+        });
 
     } catch (error) {
-        res.status(500).json(new ApiError(500, "user not egistered"))
-
+        res.status(500).json({
+            status: "failed",
+            message: "User not registered",
+            error: error.message
+        });
     }
-
 }
+
 //email varification
 export const verifyEmail = async (req, res) => {
     try {
@@ -139,6 +151,7 @@ export const verifyEmail = async (req, res) => {
     }
 
 }
+
 //login
 export const login = async (req, res) => {
     try {

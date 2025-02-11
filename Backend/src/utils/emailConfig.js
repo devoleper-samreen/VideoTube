@@ -3,10 +3,6 @@ import EmailVerification from "../models/emailVerification.js"
 import dotenv from "dotenv"
 dotenv.config()
 
-console.log("EMAIL_HOST:", process.env.EMAIL_HOST);
-console.log("EMAIL_PORT:", process.env.EMAIL_PORT);
-console.log("AUTH_USER:", process.env.AUTH_USER);
-console.log("AUTH_PASS:", process.env.AUTH_PASS);
 
 export const transport = nodemailer.createTransport({
 
