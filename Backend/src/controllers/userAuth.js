@@ -1,9 +1,8 @@
 import { User } from "../models/user.js"
 import bcrypt from "bcrypt"
-import { ApiError } from "../utils/apiError.js"
-import { ApiResponse } from "../utils/apiResponse.js"
 import { sendEmailOTP } from "../utils/emailConfig.js"
 import EmailVerification from "../models/emailVerification.js"
+import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js"
 
 //registration
 export const registration = async (req, res) => {
@@ -177,32 +176,26 @@ export const login = async (req, res) => {
             })
         }
 
-        const accessToken = jwt.sign({
-            userId: user._id
-        },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        )
-        const refreshToken = jwt.sign({
-            userId: user._id
-        },
-            process.env.JWT_SECRET,
-            { expiresIn: "7d" }
-        )
+        const accessToken = generateAccessToken(user)
+        const refreshToken = generateRefreshToken(user)
 
-        res.cookie("accessToken", accessToken, {
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
+
+        //send cookie
+        const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV !== "development",
-            maxAge: 1 * 60 * 60 * 1000
-        })
+            secure: true
+        }
 
-
-        res.status(200).json({
-            status: "success",
-            message: "login successful",
-            accessToken,
-            refreshToken
-        })
+        return res.status(200).
+            cookie("accessToken", accessToken, options).
+            cookie("refeshToken", refreshToken, options).
+            json({
+                user: loggedInUser,
+                accessToken,
+                refreshToken
+            })
 
     } catch (error) {
         res.status(500).json({
@@ -217,6 +210,35 @@ export const login = async (req, res) => {
 //send password reset email
 //reset email
 //logout
+export const logout = async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $unset: {
+                    refreshToken: 1
+                }
+            },
+            {
+                new: true
+            }
+        )
+
+        res.clearCookie("accessToken")
+        res.clearCookie("refreshToken")
+
+        return res.status(200).json({
+            status: "success",
+            message: "logout success"
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "logout error",
+            error: error
+        })
+    }
+}
 
 //profile
 
