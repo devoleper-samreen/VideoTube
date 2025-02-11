@@ -31,11 +31,6 @@ app.use("/api/user", userRoute)
 
 connectDB();
 
-console.log("EMAIL_HOST:", process.env.EMAIL_HOST);
-console.log("EMAIL_PORT:", process.env.EMAIL_PORT);
-console.log("AUTH_USER:", process.env.AUTH_USER);
-console.log("AUTH_PASS:", process.env.AUTH_PASS);
-
 app.listen(port, () => {
     console.log(`App is running on : http://localhost:${port}`);
 })

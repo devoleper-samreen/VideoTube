@@ -205,10 +205,6 @@ export const login = async (req, res) => {
     }
 }
 
-//get accesstoken and refreshtoken
-//change password
-//send password reset email
-//reset email
 //logout
 export const logout = async (req, res) => {
     try {
@@ -241,4 +237,28 @@ export const logout = async (req, res) => {
 }
 
 //profile
+export const profile = async (req, res) => {
+    try {
+        const { id } = req.user
+        const user = await User.findById(id)
+
+        if (!user) {
+            return res.status(404).json({
+                status: "failed",
+                message: "user not found"
+            })
+        }
+
+        return res.status(200).json({
+            status: "success",
+            user
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "profile error",
+            error: error
+        })
+    }
+}
 
