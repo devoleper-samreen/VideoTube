@@ -268,8 +268,11 @@ export const logout = async (req, res) => {
 
 //profile
 export const profile = async (req, res) => {
+    console.log("profile called");
     try {
+        console.log("req.user", req?.user);
         const { id } = req.user
+        console.log("id", id);
         const user = await User.findById(id)
 
         if (!user) {

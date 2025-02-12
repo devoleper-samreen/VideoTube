@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { User } from "../models/user.model.js"
+import { User } from "../models/user.js"
 import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js"
 
 export const refreshAccessToken = async (req, res) => {
@@ -12,7 +12,9 @@ export const refreshAccessToken = async (req, res) => {
     }
 
     try {
+        console.log(process.env.REFRESH_TOKEN_SECRET)
         const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+        console.log(decodedToken)
 
         if (!decodedToken) {
             return res.status(401).json({
@@ -20,7 +22,7 @@ export const refreshAccessToken = async (req, res) => {
             })
         }
 
-        const user = await User.findById(decodedToken?._id)
+        const user = await User.findById(decodedToken?.id)
 
         if (!user) {
             return res.status(401).json({

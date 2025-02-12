@@ -1,5 +1,5 @@
 import express from "express"
-import { registration, login, logout, verifyEmail } from "../controllers/userAuth.js"
+import { registration, login, logout, verifyEmail, profile } from "../controllers/userAuth.js"
 import { verifyToken } from "../middelwares/verifyJWT.js"
 import { refreshAccessToken } from "../controllers/refreshAccToken.js"
 
