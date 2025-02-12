@@ -50,13 +50,33 @@ export const updateProfile = async (req, res) => {
             });
         }
 
-        const { name, profilePicture, coverImage, description } = req.body;
+        const { name, description } = req.body;
 
         if (!name && !profilePicture && !coverImage && !description) {
             return res.status(400).json({
                 status: "failed",
                 message: "At least one of name, profile picture, cover image, or description is required"
             });
+        }
+        const profilePictureLocalPath = req.files?.profilePicture[0]?.path
+        const coverImageLocalPath = req.files?.coverImage[0]?.path
+
+        const profilePicture = await uploadOnCloudinary(profilePictureLocalPath)
+        const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+
+        if (!profilePicture) {
+            return res.status(400).json({
+                status: "failed",
+                message: "Profile picture upload failed"
+            });
+        }
+
+        if (!coverImage) {
+            return res.status(400).json({
+                status: "failed",
+                message: "Cover image upload failed"
+            });
+
         }
 
         // update name
@@ -82,19 +102,22 @@ export const updateProfile = async (req, res) => {
             // if profile not found, then create new profile
             profile = new Profile({
                 userDetail: userId,
-                profilePicture,
-                coverImage,
+                profilePicture: profilePicture?.url || "",
+                coverImage: coverImage?.url || "",
                 description
             });
         } else {
             // if profile found, then update profile
             profile.profilePicture = profilePicture
-            profile.coverImage = coverImage
-            profile.description = description
+            profile.coverImage = coverImage?.url || ""
+            profile.description = description?.url || ""
         }
 
         // save profile
         await profile.save();
+
+        console.log("Profile Picture:", profilePicture);
+        console.log("Cover Image:", coverImage);
 
         return res.status(200).json({
             status: "success",
