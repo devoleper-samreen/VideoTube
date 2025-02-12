@@ -1,5 +1,43 @@
+import { Profile } from "../models/profile.js";
+import { User } from "../models/user.js";
 
-import Profile from "../models/profile.js";
+export const getProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        if (!userId) {
+            return res.status(400).json({
+                status: "failed",
+                message: "User ID is required"
+            });
+        }
+
+        //find profile
+        const profile = await Profile.findOne({
+            userDetail: userId
+        }).populate("userDetail", "name email");
+
+        if (!profile) {
+            return res.status(404).json({
+                status: "failed",
+                message: "Profile not found"
+            });
+        }
+
+        return res.status(200).json({
+            status: "success",
+            profile
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            message: "Error fetching profile",
+            error: error.message
+        });
+    }
+};
+
 
 export const updateProfile = async (req, res) => {
     try {
@@ -22,8 +60,8 @@ export const updateProfile = async (req, res) => {
         }
 
         // update name
+        const user = await User.findById(userId);
         if (name) {
-            const user = await User.findById(userId);
             if (user) {
                 user.name = name;
                 await user.save();
@@ -61,7 +99,9 @@ export const updateProfile = async (req, res) => {
         return res.status(200).json({
             status: "success",
             message: "Profile updated successfully",
-            profile
+            profile,
+            user
+
         });
 
     } catch (error) {

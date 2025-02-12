@@ -266,32 +266,5 @@ export const logout = async (req, res) => {
     }
 }
 
-//profile
-export const profile = async (req, res) => {
-    console.log("profile called");
-    try {
-        console.log("req.user", req?.user);
-        const { id } = req.user
-        console.log("id", id);
-        const user = await User.findById(id)
 
-        if (!user) {
-            return res.status(404).json({
-                status: "failed",
-                message: "user not found"
-            })
-        }
-
-        return res.status(200).json({
-            status: "success",
-            user
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            message: "profile error",
-            error: error
-        })
-    }
-}
 
