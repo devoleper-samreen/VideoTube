@@ -59,6 +59,12 @@ export const updateProfile = async (req, res) => {
         const profilePicture = await uploadOnCloudinary(profilePictureLocalPath)
         const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
+        console.log("Profile Picture:", profilePicture);
+        console.log("Cover Image:", coverImage);
+        console.log("profile :", profilePicture.secure_url || profilePicture.url);
+        console.log("cover :", coverImage.secure_url || coverImage.url);
+
+
         if (!profilePicture) {
             return res.status(400).json({
                 status: "failed",
@@ -97,22 +103,20 @@ export const updateProfile = async (req, res) => {
             // if profile not found, then create new profile
             profile = new Profile({
                 userDetail: userId,
-                profilePicture: profilePicture?.secure_url || "",
-                coverImage: coverImage?.secure_url || "",
+                profilePicture: profilePicture.secure_url || profilePicture.url,
+                coverImage: coverImage.secure_url || coverImage.url,
                 description
             });
         } else {
             // if profile found, then update profile
-            profile.profilePicture = profilePicture
-            profile.coverImage = coverImage?.secure_url || ""
-            profile.description = description?.secure_url || ""
+            profile.profilePicture = profilePicture.secure_url || profilePicture.url || ""
+            profile.coverImage = coverImage?.secure_url || coverImage?.url || ""
+            profile.description = description
         }
 
         // save profile
         await profile.save();
 
-        console.log("Profile Picture:", profilePicture);
-        console.log("Cover Image:", coverImage);
 
         return res.status(200).json({
             status: "success",
