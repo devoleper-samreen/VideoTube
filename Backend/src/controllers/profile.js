@@ -1,5 +1,6 @@
 import { Profile } from "../models/profile.js";
 import { User } from "../models/user.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const getProfile = async (req, res) => {
     try {
@@ -52,12 +53,6 @@ export const updateProfile = async (req, res) => {
 
         const { name, description } = req.body;
 
-        if (!name && !profilePicture && !coverImage && !description) {
-            return res.status(400).json({
-                status: "failed",
-                message: "At least one of name, profile picture, cover image, or description is required"
-            });
-        }
         const profilePictureLocalPath = req.files?.profilePicture[0]?.path
         const coverImageLocalPath = req.files?.coverImage[0]?.path
 
@@ -102,15 +97,15 @@ export const updateProfile = async (req, res) => {
             // if profile not found, then create new profile
             profile = new Profile({
                 userDetail: userId,
-                profilePicture: profilePicture?.url || "",
-                coverImage: coverImage?.url || "",
+                profilePicture: profilePicture?.secure_url || "",
+                coverImage: coverImage?.secure_url || "",
                 description
             });
         } else {
             // if profile found, then update profile
             profile.profilePicture = profilePicture
-            profile.coverImage = coverImage?.url || ""
-            profile.description = description?.url || ""
+            profile.coverImage = coverImage?.secure_url || ""
+            profile.description = description?.secure_url || ""
         }
 
         // save profile
