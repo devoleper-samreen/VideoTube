@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 import { generateAccessToken } from "../utils/generateTokens.js";
 import { transport } from "../utils/emailConfig.js";
@@ -74,7 +75,7 @@ export const forgotPassword = async (req, res) => {
         // Generate reset token
         const resetToken = generateAccessToken(user);
 
-        const resetLink = `${process.env.FRONTEND_HOST}/reset-password/${resetToken}`;
+        const resetLink = `${process.env.FRONTEND_HOST}/reset-password/${user.id}/${resetToken}`;
 
         await transport.sendMail({
             from: process.env.EMAIL_FROM,
@@ -103,28 +104,39 @@ export const forgotPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
     try {
-        const { token } = req.params;
-        const { newPassword } = req.body;
+        const { id, token } = req.params;
+        const { newPassword, confiremPassword } = req.body;
 
-        // Hash the token and find user
-        const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+        if (!newPassword || !confiremPassword) {
+            return res.status(400).json({
+                message: "Both new password and confirm password are required"
+            });
+        }
 
-        const user = await User.findOne({
-            resetPasswordToken: hashedToken,
-            resetPasswordExpires: { $gt: Date.now() },
-        });
+        if (newPassword !== confiremPassword) {
+            return res.status(400).json({
+                message: "Passwords do not match"
+            });
+        }
+
+        const user = await User.findById(id);
 
         if (!user) {
-            return res.status(400).json({ message: "Invalid or expired token" });
+            return res.status(400).json({
+                message: "User not found"
+            });
         }
+
+        //verify token
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
         // Hash new password
         const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-        // Remove reset token fields
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
+        // Update password in database
+        user.password = hashedPassword;
+
         await user.save();
 
         res.status(200).json({

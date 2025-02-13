@@ -5,7 +5,7 @@ import { refreshAccessToken } from "../controllers/refreshAccToken.js"
 import { getProfile, updateProfile } from "../controllers/profile.js"
 import { upload } from "../middelwares/multur.js"
 import { changePassword } from "../controllers/password.js"
-import { forgotPassword } from "../controllers/password.js"
+import { forgotPassword, resetPassword } from "../controllers/password.js"
 
 const router = express.Router();
 
@@ -28,5 +28,6 @@ router.patch('/profile', verifyToken, upload.fields([
 
 router.patch('/change-password', verifyToken, changePassword)
 router.post('/forgot-password', forgotPassword)
+router.patch('/reset-password/:id/:token', resetPassword)
 
 export default router
