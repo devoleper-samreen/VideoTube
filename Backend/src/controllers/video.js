@@ -3,9 +3,13 @@ import { Video } from "../models/video.js"
 
 export const publishVideo = async (req, res) => {
     try {
+        console.log("Publishing video");
+
         const { title, description } = req.body;
-        const { videoLocalPath } = req.file;
-        const { thumbnailLocalPath } = req.file;
+
+        const videoLocalPath = req.files.video[0].path;
+        const thumbnailLocalPath = req.files.thumbnail[0].path;
+
 
         console.log(title, description, videoLocalPath, thumbnailLocalPath);
 
@@ -47,6 +51,5 @@ export const publishVideo = async (req, res) => {
         });
 
     }
-
 
 }
