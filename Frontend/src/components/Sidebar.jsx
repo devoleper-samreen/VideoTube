@@ -1,5 +1,4 @@
 import { GoHome } from "react-icons/go";
-import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions, MdHistory } from "react-icons/md";
 import { PiUserSquareThin } from "react-icons/pi";
 import { IoGameControllerOutline } from "react-icons/io5";
@@ -8,7 +7,6 @@ import { FaChevronRight } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
 import { SiYoutubestudio } from "react-icons/si";
 import { SiYoutubekids } from "react-icons/si";
-import { MdOutlineWatchLater } from "react-icons/md";
 import { SiYoutubemusic } from "react-icons/si";
 import { SiTrendmicro } from "react-icons/si";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
@@ -28,11 +26,7 @@ function Sidebar() {
       name: "Home",
       icon: <GoHome />,
     },
-    {
-      id: 2,
-      name: "Shorts",
-      icon: <SiYoutubeshorts />,
-    },
+    
     {
       id: 3,
       name: "Subscriptions",
@@ -60,11 +54,7 @@ function Sidebar() {
       name: "Your Videos",
       icon: <BiVideo />,
     },
-    {
-      id: 5,
-      name: "Watch later",
-      icon: <MdOutlineWatchLater />,
-    },
+    
     {
       id: 6,
       name: "Liked videos",
