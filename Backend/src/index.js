@@ -5,6 +5,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import passport from "passport"
 import userRoute from "./routes/userRoute.js"
+import videoRoute from "./routes/videoRoute.js"
 
 dotenv.config(
     {
@@ -36,6 +37,7 @@ app.use(express.static("public"))
 
 //routes
 app.use("/api/user", userRoute)
+app.use("/api/video", videoRoute)
 
 connectDB();
 
