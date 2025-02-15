@@ -6,6 +6,13 @@ export const publishVideo = async (req, res) => {
         console.log("Publishing video");
 
         const { title, description } = req.body;
+        const { userId } = req.params
+
+        if (!userId) {
+            return res.status(400).json({
+                message: 'User ID is required'
+            });
+        }
 
         const videoLocalPath = req.files.video[0].path;
         const thumbnailLocalPath = req.files.thumbnail[0].path;
@@ -23,11 +30,13 @@ export const publishVideo = async (req, res) => {
 
         console.log(video.secure_url, thumbnail.secure_url);
 
+
         const createdVideo = await Video.create({
             title,
             description,
             video: video.secure_url,
-            thumbnail: thumbnail.secure_url
+            thumbnail: thumbnail.secure_url,
+            owner: userId
         });
 
         const savedVideo = await createdVideo.save();
@@ -57,7 +66,7 @@ export const publishVideo = async (req, res) => {
 export const getAllVideos = async (req, res) => {
 
     try {
-        const { userId } = req.query
+        const { userId } = req.params
 
         if (!userId) {
             return res.status(400).json({
@@ -65,7 +74,7 @@ export const getAllVideos = async (req, res) => {
             })
         }
 
-        const AllVideos = await Video.findById({ owner: userId })
+        const AllVideos = await Video.find({ owner: userId })
 
         if (!AllVideos) {
             return res.status(404).json({
@@ -89,7 +98,9 @@ export const getAllVideos = async (req, res) => {
 
 export const getVideoById = async (req, res) => {
     try {
-        const { videoId } = req.query
+        const { videoId } = req.params
+        console.log(videoId);
+
 
         if (!videoId) {
             return res.status(400).json({
@@ -121,7 +132,9 @@ export const getVideoById = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
     try {
-        const { videoId } = req.query
+        const { videoId } = req.params
+        console.log(videoId);
+
 
         if (!videoId) {
             return res.status(400).json({
@@ -157,6 +170,8 @@ export const updateVideo = async (req, res) => {
     try {
         const { videoId } = req.params
         const { title, description } = req.body
+        const thumbnailLocalPath = req.files.thumbnail[0].path;
+
 
         if (!videoId) {
             return res.status(400).json({
@@ -164,9 +179,25 @@ export const updateVideo = async (req, res) => {
             })
         }
 
+        if (!thumbnailLocalPath) {
+            return res.status(400).json({
+                message: "Thumbnail is required"
+            });
+        }
+
+        const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+
+        if (!thumbnail) {
+            return res.status(400).json({
+                message: "Thumbnail could not be uploaded"
+            });
+        }
+
+
         const video = await Video.findByIdAndUpdate(
             { _id: videoId },
             { title, description },
+            { thumbnail: thumbnail },
             { new: true }
         )
 

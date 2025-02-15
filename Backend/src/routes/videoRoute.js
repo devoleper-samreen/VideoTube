@@ -12,7 +12,7 @@ import { upload } from '../middelwares/multur.js';
 const router = express.Router()
 router.use(verifyToken)
 
-router.post('/', upload.fields([
+router.post('/:userId', upload.fields([
     {
         name: "video",
         maxCount: 1,
@@ -25,7 +25,7 @@ router.post('/', upload.fields([
 ]), publishVideo)
 
 router.get('/:videoId', getVideoById)
-router.get('/:userId', getAllVideos)
+router.get('/get-all/:userId', getAllVideos)
 router.delete('/:videoId', deleteVideo)
 router.patch('/:videoId', upload.fields([
     {
