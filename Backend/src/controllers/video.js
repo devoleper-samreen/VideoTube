@@ -132,17 +132,16 @@ export const getVideoById = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
     try {
-        const { videoId } = req.params
-        console.log(videoId);
+        const { userId, videoId } = req.params
+        console.log(videoId, userId);
 
-
-        if (!videoId) {
+        if (!videoId || !userId) {
             return res.status(400).json({
                 message: "videoId is required"
             })
         }
 
-        const video = await Video.findByIdAndDelete(
+        const video = await Video.findById(
             { _id: videoId }
         )
 
@@ -151,6 +150,14 @@ export const deleteVideo = async (req, res) => {
                 message: "No video found"
             })
         }
+
+        if (video.owner !== userId) {
+            return res.status(403).json({
+                message: "You are not owner of this video"
+            })
+        }
+
+        await Video.findByIdAndDelete({ _id: videoId })
 
         return res.status(200).json({
             message: "Video deleted successfully",
@@ -168,14 +175,20 @@ export const deleteVideo = async (req, res) => {
 
 export const updateVideo = async (req, res) => {
     try {
-        const { videoId } = req.params
+        const { userId, videoId } = req.params
         const { title, description } = req.body
         const thumbnailLocalPath = req.files.thumbnail[0].path;
 
 
-        if (!videoId) {
+        if (!videoId || !userId) {
             return res.status(400).json({
                 message: "videoId is required"
+            })
+        }
+
+        if (video.owner !== userId) {
+            return res.status(403).json({
+                message: "You are not owner of this video"
             })
         }
 
