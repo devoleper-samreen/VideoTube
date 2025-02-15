@@ -6,12 +6,12 @@ const SubscriptionSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
-        }, // The user who is subscribing
+        }, // The channel who is subscribing
         subscription: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
-        }, // The user being subscribed to
+        }, // The channel being subscribed to
     },
     { timestamps: true }
 );
