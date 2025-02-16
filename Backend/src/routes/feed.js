@@ -1,5 +1,5 @@
 import express from "express";
-import { getRandomVideos, getTrendingVideos, getMixedVideos } from "../controllers/videoController.js";
+import { getRandomVideos, getTrendingVideos, getMixedVideos } from "../controllers/videosPipelines.js";
 
 const router = express.Router();
 
