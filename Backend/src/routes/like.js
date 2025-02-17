@@ -4,8 +4,8 @@ import { addLike, deleteLike, getLikesByVideo, getLikesCountByVideo } from '../c
 const router = express.Router();
 
 router.post('/:videoId', addLike);
-router.post('/unlike/:videoId', deleteLike);
+router.delete('/:videoId', deleteLike);
 router.get('/:videoId', getLikesByVideo);
-router.get('/count/videoId', getLikesCountByVideo)
+router.get('/count/:videoId', getLikesCountByVideo)
 
 export default router;
