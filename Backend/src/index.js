@@ -6,6 +6,11 @@ import cookieParser from "cookie-parser"
 import passport from "passport"
 import userRoute from "./routes/userRoute.js"
 import videoRoute from "./routes/videoRoute.js"
+import commentRoute from "./routes/comment.js"
+import likeRoute from "./routes/like.js"
+import feedRoute from "./routes/feed.js"
+import playlistRoute from "./routes/playlist.js"
+import searchRoute from "./routes/search.js"
 
 dotenv.config(
     {
@@ -38,6 +43,11 @@ app.use(express.static("public"))
 //routes
 app.use("/api/user", userRoute)
 app.use("/api/video", videoRoute)
+app.use("/api/feed", feedRoute)
+app.use("/api/like", likeRoute)
+app.use("/api/comment", commentRoute)
+app.use("/api/playlist", playlistRoute)
+app.use("/api/search", searchRoute)
 
 connectDB();
 
