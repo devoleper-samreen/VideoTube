@@ -132,3 +132,29 @@ export const deleteComment = async (req, res) => {
         });
     }
 };
+
+export const getCommentsCountByVideo = async (req, res) => {
+    try {
+        const { videoId } = req.params;
+
+        if (!videoId) {
+            return res.status(400).json({
+                message: "videoId is required"
+            });
+        }
+
+        const commentsCount = await Comment.find({ onVideo: videoId }).countDocuments();
+
+        return res.status(200).json({
+            message: "Comments count retrieved successfully",
+            commentsCount
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error fetching comments count",
+            error
+        });
+    }
+};
+

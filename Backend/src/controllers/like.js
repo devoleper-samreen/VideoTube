@@ -65,3 +65,28 @@ export const getLikesByVideo = async (req, res) => {
         });
     }
 };
+
+export const getLikesCountByVideo = async (req, res) => {
+    try {
+        const { videoId } = req.params;
+
+        if (!videoId) {
+            return res.status(400).json({
+                message: "videoId is required"
+            });
+        }
+
+        const likesCount = await Like.find({ onVideo: videoId }).countDocuments();
+
+        return res.status(200).json({
+            message: "Likes count retrieved successfully",
+            likesCount
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error fetching likes count",
+            error
+        });
+    }
+};
