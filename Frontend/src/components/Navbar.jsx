@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import OIP from "../../public/OIP.jpg";
+import OIP from "../assets/OIP.jpg";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdMic } from "react-icons/io";
 import { RiVideoAddLine } from "react-icons/ri";
