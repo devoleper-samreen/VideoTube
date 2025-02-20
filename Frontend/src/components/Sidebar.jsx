@@ -145,7 +145,7 @@ function Sidebar({ isOpen }) {
   return (
     <div 
       className={`h-[calc(100vh-56px)] bg-white transition-all duration-300 overflow-y-auto
-      ${isOpen ? 'w-64' : 'w-20'}`}
+      ${isOpen ? 'w-44' : 'w-14'}`}
     >
       {/* Home */}
       <div className=" space-y-3 items-center">
@@ -153,7 +153,7 @@ function Sidebar({ isOpen }) {
           return (
             <div
               key={item.id}
-              className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-1"
+              className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-2"
             >
               <div className="text-xl cursor-pointer">{item.icon}</div>
               <span className="cursor-pointer">{item.name}</span>
