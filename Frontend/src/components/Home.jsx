@@ -14,9 +14,9 @@ function Home() {
   };
 
   return (
-    <div className="flex mt-20">
+    <div className="flex mt-10">
       <Navbar toggleSidebar={toggleSidebar} />
-      <div className="flex flex-1 mt-14">
+      <div className="flex flex-1 mt-10">
         <Sidebar isOpen={isSidebarOpen} />
       </div>
         {/* <ListItems /> */}
