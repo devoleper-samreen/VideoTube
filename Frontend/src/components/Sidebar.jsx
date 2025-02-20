@@ -143,9 +143,10 @@ function Sidebar({ isOpen }) {
     },
   ];
   return (
-    <div className={`px-6 w-[17%] h-[calc(100vh-6.625rem)] overflow-y-scroll overflow-x-hidden ${
-      isOpen ? 'w-64' : 'w-20'
-    } overflow-hidden`}>
+    <div 
+      className={`h-[calc(100vh-56px)] bg-white transition-all duration-300 overflow-y-auto
+      ${isOpen ? 'w-64' : 'w-20'}`}
+    >
       {/* Home */}
       <div className=" space-y-3 items-center">
         {sidebarItems.map((item) => {
