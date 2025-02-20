@@ -1,16 +1,20 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import OIP from "../assets/OIP.jpg";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RiVideoUploadFill } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
 
-function Navbar() {
+function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className="flex justify-between fixed top-0 w-[100%] bg-white px-6 py-2">
       <div className="flex items-center space-x-4">
-        <AiOutlineMenu className="text-xl cursor-pointer" />
+        <AiOutlineMenu 
+          className="text-xl cursor-pointer hover:bg-gray-100 p-2 rounded-full"
+          onClick={toggleSidebar}
+        />
         <img src={OIP} alt="" className="w-28 cursor-pointer" />
       </div>
       <div className="flex w-[35%] items-center">
@@ -41,5 +45,8 @@ function Navbar() {
     </div>
   );
 }
+Navbar.propTypes = {
+  toggleSidebar: PropTypes.func.isRequired,
+};
 
 export default Navbar;

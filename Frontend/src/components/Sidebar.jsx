@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { GoHome } from "react-icons/go";
 import { MdOutlineSubscriptions, MdHistory } from "react-icons/md";
 import { PiUserSquareThin } from "react-icons/pi";
@@ -19,7 +20,8 @@ import { SiStylelint } from "react-icons/si";
 import { MdPodcasts } from "react-icons/md";
 import { BiVideo } from "react-icons/bi";
 
-function Sidebar() {
+
+function Sidebar({ isOpen }) {
   const sidebarItems = [
     {
       id: 1,
@@ -141,7 +143,9 @@ function Sidebar() {
     },
   ];
   return (
-    <div className="px-6 w-[17%] h-[calc(100vh-6.625rem)] overflow-y-scroll overflow-x-hidden ">
+    <div className={`px-6 w-[17%] h-[calc(100vh-6.625rem)] overflow-y-scroll overflow-x-hidden ${
+      isOpen ? 'w-64' : 'w-20'
+    } overflow-hidden`}>
       {/* Home */}
       <div className=" space-y-3 items-center">
         {sidebarItems.map((item) => {
@@ -229,5 +233,8 @@ function Sidebar() {
     </div>
   );
 }
+Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+};
 
 export default Sidebar;
