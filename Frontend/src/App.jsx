@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Search from './components/Search';
 import PlayingVideo from './components/PlayingVideo';
 import './App.css';
+import Signup from './components/Signup';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/search/:searchQuery" element={<Search />} />
         <Route path="/playing" element={<PlayingVideo />} />
-
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );
