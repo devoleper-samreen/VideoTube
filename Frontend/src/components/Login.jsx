@@ -1,6 +1,7 @@
 import React from 'react'
 import { TextField, Button } from "@mui/material";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
 
 function Login() {
     return (
@@ -21,13 +22,11 @@ function Login() {
                     fullWidth
                     margin="normal"
                 />
-                <TextField
-                    type="password"
-                    label="Confirm Password"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                />
+                <Link
+                    href="/forgot-password"
+                    sx={{ marginTop: '10px', display: 'block', textAlign: 'right' }}>
+                    Forgot Password?
+                </Link>
                 <Button
                     variant="contained"
                     color="primary"
@@ -38,8 +37,10 @@ function Login() {
                     Submit
                 </Button>
                 <p className='text-center mt-8'>
-                    dont have account?
-                    <Link to='/signup' className='text-blue-700'> Signup</Link>
+                    dont have account? <Link
+                        href="/signup"
+                    > Signup
+                    </Link>
                 </p>
 
             </div>
