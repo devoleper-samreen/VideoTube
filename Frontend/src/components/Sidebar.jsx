@@ -28,7 +28,7 @@ function Sidebar({ isOpen }) {
       name: "Home",
       icon: <GoHome />,
     },
-    
+
     {
       id: 3,
       name: "Subscriptions",
@@ -56,7 +56,7 @@ function Sidebar({ isOpen }) {
       name: "Your Videos",
       icon: <BiVideo />,
     },
-    
+
     {
       id: 6,
       name: "Liked videos",
@@ -143,9 +143,10 @@ function Sidebar({ isOpen }) {
     },
   ];
   return (
-    <div 
-      className={`h-[calc(100vh-56px)] bg-white transition-all duration-300 overflow-y-auto
-      ${isOpen ? 'w-44' : 'w-14'}`}
+    <div
+      className={`h-[calc(100vh-56px)] border-r p-5 border-r-gray-800 bg-white transition-all duration-300 overflow-y-auto
+      ${isOpen ? 'w-44' : 'w-16'}`}
+      id='sidebar'
     >
       {/* Home */}
       <div className=" space-y-3 items-center">

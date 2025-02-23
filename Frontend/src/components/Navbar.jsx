@@ -5,13 +5,14 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { RiVideoUploadFill } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
 
+
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className="flex justify-between fixed top-0 w-full bg-white px-3 py-2 z-50 h-14">
       <div className="flex items-center space-x-4">
-        <AiOutlineMenu 
+        <AiOutlineMenu
           className="text-xl cursor-pointer hover:bg-gray-100 rounded-full"
           onClick={toggleSidebar}
         />
@@ -38,7 +39,7 @@ function Navbar({ toggleSidebar }) {
         </div>
         {/* Upload Video Button */}
         <div className="px-4 py-2 border-[1px] border-gray-400 rounded-full flex items-center space-x-2 hover:bg-gray-00 cursor-pointer transition duration-300">
-          <RiVideoUploadFill className="text-xl"/>
+          <RiVideoUploadFill className="text-xl" />
           <span className="text-sm font-medium">Upload</span>
         </div>
       </div>

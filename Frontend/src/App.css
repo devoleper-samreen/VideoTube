@@ -1,0 +1,9 @@
+#sidebar {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+#sidebar::-webkit-scrollbar {
+    width: 0;
+}
