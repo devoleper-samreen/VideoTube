@@ -5,6 +5,7 @@ import Search from './components/Search';
 import PlayingVideo from './components/PlayingVideo';
 import './App.css';
 import Signup from './components/Signup';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/search/:searchQuery" element={<Search />} />
         <Route path="/playing" element={<PlayingVideo />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
