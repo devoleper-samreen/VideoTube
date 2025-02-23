@@ -12,7 +12,7 @@ function Home() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen mx-auto max-w-[1500px]">
       <Navbar toggleSidebar={toggleSidebar} />
       <div className="flex flex-1 pt-14">
         <Sidebar isOpen={isSidebarOpen} />

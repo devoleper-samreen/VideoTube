@@ -144,8 +144,8 @@ function Sidebar({ isOpen }) {
   ];
   return (
     <div
-      className={`h-[calc(100vh-56px)] border-r p-5 border-r-gray-800 bg-white transition-all duration-300 overflow-y-auto
-      ${isOpen ? 'w-44' : 'w-16'}`}
+      className={`h-[calc(100vh-56px)] border-r-2 p-5 border-r-gray-200 bg-white transition-all duration-300 overflow-y-auto
+      ${isOpen ? 'w-50' : 'w-16'}`}
       id='sidebar'
     >
       {/* Home */}

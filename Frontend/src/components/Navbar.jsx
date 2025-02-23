@@ -4,19 +4,21 @@ import OIP from "../assets/OIP.jpg";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RiVideoUploadFill } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="flex justify-between fixed top-0 w-full bg-white px-3 py-2 z-50 h-14">
+    <div className="flex justify-between max-w-[1250px] w-full mx-auto bg-white px-10 py-6 h-14 items-center shadow-md fixed">
       <div className="flex items-center space-x-4">
         <AiOutlineMenu
           className="text-xl cursor-pointer hover:bg-gray-100 rounded-full"
           onClick={toggleSidebar}
         />
-        <img src={OIP} alt="" className="w-28 cursor-pointer" />
+        <img src={OIP} alt="" className="w-22 cursor-pointer" />
       </div>
       <div className="flex w-[35%] items-center">
         <div className="w-[100%] px-4 py-2 border-[1px] border-gray-400 rounded-full">
@@ -42,6 +44,15 @@ function Navbar({ toggleSidebar }) {
           <RiVideoUploadFill className="text-xl" />
           <span className="text-sm font-medium">Upload</span>
         </div>
+        <Link to="/login">
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ width: '100%', textTransform: 'none' }}
+          >
+            Login
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react'
 import { TextField, Button } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 function Login() {
     return (
@@ -36,6 +37,11 @@ function Login() {
                 >
                     Submit
                 </Button>
+                <p className='text-center mt-8'>
+                    dont have account?
+                    <Link to='/signup' className='text-blue-700'> Signup</Link>
+                </p>
+
             </div>
         </>
     )
