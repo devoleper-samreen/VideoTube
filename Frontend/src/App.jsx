@@ -14,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/search/:searchQuery" element={<Search />} />
         <Route path="/playing" element={<PlayingVideo />} />
+
       </Routes>
     </div>
   );
