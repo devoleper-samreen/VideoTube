@@ -2,8 +2,30 @@ import React from 'react'
 import { TextField, Button } from "@mui/material";
 // import { Link } from 'react-router-dom';
 import { Link } from '@mui/material';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../redux/api/auth'
 
 function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [login, { isLoading, isError, error }] = useLoginMutation();
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await login({ email, password }).unwrap(); //
+            console.log("Login Successful:", response);
+            alert("Login successful!");
+            navigate("/");
+        } catch (err) {
+            console.error("Login Failed:", err);
+        }
+    };
+
+
     return (
         <>
             <div className='mx-auto mt-24 w-[38%] shadow-md px-5 py-10 border-t-4 border-blue-400 rounded'>
@@ -14,6 +36,8 @@ function Login() {
                     variant="outlined"
                     fullWidth
                     margin="normal"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
                     type='password'
@@ -21,6 +45,8 @@ function Login() {
                     variant="outlined"
                     fullWidth
                     margin="normal"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <Link
                     href="/forgot-password"
@@ -33,6 +59,8 @@ function Login() {
                     fullWidth
                     size="large"
                     sx={{ marginTop: '30px' }}
+                    onClick={handleLogin}
+                    disabled={isLoading}
                 >
                     Submit
                 </Button>
@@ -42,6 +70,8 @@ function Login() {
                     > Signup
                     </Link>
                 </p>
+                {isLoading && "Logging in..."}
+                {isError && <p className="text-red-500 mt-2">{error?.data?.message || "Login failed"}</p>}
 
             </div>
         </>
