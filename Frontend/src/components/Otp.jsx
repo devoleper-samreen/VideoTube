@@ -1,9 +1,16 @@
 import React, { useState, useRef } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
+import { useOtpVerifyMutation } from "../../redux/api/auth"
+import { CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 
 const OTPInput = ({ onVerify }) => {
+    const [email, setEmail] = useState("");
     const [otp, setOtp] = useState(new Array(4).fill(""));
     const inputRefs = useRef([]);
+    const navigate = useNavigate();
+    const [otpVerify, { isLoading, isError, isSuccess, error }] = useOtpVerifyMutation()
 
     const handleChange = (e, index) => {
         const value = e.target.value;
@@ -25,9 +32,20 @@ const OTPInput = ({ onVerify }) => {
         }
     };
 
-    const handleVerify = () => {
-        const enteredOtp = otp.join("");
-        onVerify(enteredOtp);
+    const handleVerify = async () => {
+        const enteredOtp = otp.join(""); // OTP ko string me convert karein
+
+        try {
+            const response = await otpVerify({
+                email,
+                otp: enteredOtp
+            }).unwrap();
+
+            console.log("OTP Verified Successfully:", response);
+            navigate("/login");
+        } catch (error) {
+            console.error("OTP Verification Failed:", error);
+        }
     };
 
     return (
@@ -36,6 +54,15 @@ const OTPInput = ({ onVerify }) => {
                 <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", marginBottom: "30px", fontSize: "24px" }}>
                     Enter OTP
                 </Typography>
+                <TextField
+                    label="Enter Email"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+
                 <Box display="flex" justifyContent="center" gap={1}>
                     {otp.map((value, index) => (
                         <TextField
@@ -60,8 +87,11 @@ const OTPInput = ({ onVerify }) => {
                     onClick={handleVerify}
                     disabled={otp.includes("")}
                 >
-                    Verify
+                    {isLoading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Verify"}
+
                 </Button>
+                {isSuccess && <Typography color="green" mt={2}>OTP Verified Successfully!</Typography>}
+                {isError && <Typography color="red" mt={2}>OTP Verification Failed. Try again.</Typography>}
             </Box>
         </div>
     );

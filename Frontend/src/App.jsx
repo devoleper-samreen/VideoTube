@@ -19,7 +19,7 @@ function App() {
         <Route path="/playing" element={<PlayingVideo />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path='/otp-varification' element={<OTPInput />} />
+        <Route path='/verify-email' element={<OTPInput />} />
       </Routes>
     </div>
   );

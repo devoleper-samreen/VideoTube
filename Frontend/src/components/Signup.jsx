@@ -18,7 +18,7 @@ function Signup() {
         try {
             const response = await register({ name, email, password }).unwrap(); //
             console.log("register Successful:", response);
-            navigate("/login");
+            navigate("/verify-email");
         } catch (err) {
             console.error("register Failed:", err);
         }
