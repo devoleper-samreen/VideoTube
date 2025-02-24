@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../../redux/api/auth'
 import { toast } from 'react-hot-toast';
+import Loader from './loader';
 
 function Signup() {
     const [name, setName] = useState("");
@@ -65,7 +66,8 @@ function Signup() {
                     onClick={handleRegister
                     }
                 >
-                    Submit
+                    {isLoading ? <Loader /> : "Submit"}
+
                 </Button>
                 <p className='text-center mt-8'>
                     do you want to login?

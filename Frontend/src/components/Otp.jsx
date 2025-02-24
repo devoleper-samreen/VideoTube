@@ -3,6 +3,7 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { useOtpVerifyMutation } from "../../redux/api/auth"
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 
 const OTPInput = ({ onVerify }) => {
@@ -42,9 +43,11 @@ const OTPInput = ({ onVerify }) => {
             }).unwrap();
 
             console.log("OTP Verified Successfully:", response);
+            toast.success("OTP Verified Successfully");
             navigate("/login");
         } catch (error) {
             console.error("OTP Verification Failed:", error);
+            toast.error(error.message || "OTP Verification Failed. Try again.");
         }
     };
 

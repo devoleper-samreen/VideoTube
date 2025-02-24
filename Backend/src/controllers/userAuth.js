@@ -46,16 +46,23 @@ export const registration = async (req, res) => {
         //     });
         // }
 
-        console.log("otp before");
-        await sendEmailOTP(req, newUser);
-        console.log("otp after");
-
         //create user
         const newUser = await User.create({
             name,
             email,
             password: hashedPassword
         })
+
+        console.log("otp before");
+        const otpsent = await sendEmailOTP(req, newUser);
+        console.log("otp after");
+
+        if (!otpsent) {
+            return res.status(500).json({
+                status: "failed",
+                message: "Error in sending otp"
+            });
+        }
 
         const savedUser = await newUser.save();
 

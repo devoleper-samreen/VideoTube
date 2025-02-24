@@ -4,11 +4,26 @@ import dotenv from "dotenv"
 dotenv.config()
 
 
+// export const transport = nodemailer.createTransport({
+
+//     host: process.env.EMAIL_HOST,
+//     port: process.env.EMAIL_PORT,
+//     secure: false,
+//     auth: {
+//         user: process.env.AUTH_USER,
+//         pass: process.env.AUTH_PASS
+//     },
+//     tls: {
+//         rejectUnauthorized: false //  Ignore self-signed certificate issues
+//     }
+// })
+
 export const transport = nodemailer.createTransport({
 
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: false,
+    // host: process.env.EMAIL_HOST,
+    // port: process.env.EMAIL_PORT,
+    // secure: false,
+    service: 'gmail',
     auth: {
         user: process.env.AUTH_USER,
         pass: process.env.AUTH_PASS
@@ -17,7 +32,6 @@ export const transport = nodemailer.createTransport({
         rejectUnauthorized: false //  Ignore self-signed certificate issues
     }
 })
-
 
 export const sendEmailOTP = async (req, user) => {
     try {
