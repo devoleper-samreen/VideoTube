@@ -6,6 +6,7 @@ import PlayingVideo from './components/PlayingVideo';
 import './App.css';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import OTPInput from './components/Otp';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/playing" element={<PlayingVideo />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path='/otp-varification' element={<OTPInput />} />
       </Routes>
     </div>
   );

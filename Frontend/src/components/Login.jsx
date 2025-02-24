@@ -18,7 +18,6 @@ function Login() {
         try {
             const response = await login({ email, password }).unwrap(); //
             console.log("Login Successful:", response);
-            alert("Login successful!");
             navigate("/");
         } catch (err) {
             console.error("Login Failed:", err);
