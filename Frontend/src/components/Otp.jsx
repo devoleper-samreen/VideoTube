@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useOtpVerifyMutation } from "../../redux/api/auth"
-import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import Loader from "./loader"
 
 
 const OTPInput = ({ onVerify }) => {
@@ -11,7 +11,7 @@ const OTPInput = ({ onVerify }) => {
     const [otp, setOtp] = useState(new Array(4).fill(""));
     const inputRefs = useRef([]);
     const navigate = useNavigate();
-    const [otpVerify, { isLoading, isError, isSuccess, error }] = useOtpVerifyMutation()
+    const [otpVerify, { isLoading, isError, isSuccess }] = useOtpVerifyMutation()
 
     const handleChange = (e, index) => {
         const value = e.target.value;
@@ -90,11 +90,10 @@ const OTPInput = ({ onVerify }) => {
                     onClick={handleVerify}
                     disabled={otp.includes("")}
                 >
-                    {isLoading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Verify"}
+                    {isLoading ? <Loader /> : "Verify"}
 
                 </Button>
-                {isSuccess && <Typography color="green" mt={2}>OTP Verified Successfully!</Typography>}
-                {isError && <Typography color="red" mt={2}>OTP Verification Failed. Try again.</Typography>}
+
             </Box>
         </div>
     );

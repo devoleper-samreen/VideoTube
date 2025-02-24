@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/api/auth'
 import toast from "react-hot-toast";
+import Loader from './loader';
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -70,7 +71,7 @@ function Login() {
                     onClick={handleLogin}
                     disabled={isLoading}
                 >
-                    Submit
+                    {isLoading ? <Loader /> : Submit}
                 </Button>
                 <p className='text-center mt-8'>
                     dont have account? <Link
