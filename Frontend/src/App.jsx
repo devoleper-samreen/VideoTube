@@ -7,12 +7,14 @@ import './App.css';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import OTPInput from './components/Otp';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <div>
 
       {/* <ListItems /> */}
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search/:searchQuery" element={<Search />} />

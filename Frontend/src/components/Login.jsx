@@ -1,10 +1,10 @@
 import React from 'react'
 import { TextField, Button } from "@mui/material";
-// import { Link } from 'react-router-dom';
 import { Link } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/api/auth'
+import toast from "react-hot-toast";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -18,9 +18,18 @@ function Login() {
         try {
             const response = await login({ email, password }).unwrap(); //
             console.log("Login Successful:", response);
+            toast.success(response.message || " Login Successfully!");
             navigate("/");
         } catch (err) {
             console.error("Login Failed:", err);
+
+            if (err?.data?.message === "User not found") {
+                toast.error("Email not registered!");
+            } else if (err?.data?.message === "Invalid password") {
+                toast.error("Incorrect password!");
+            } else {
+                toast.error(err?.data?.message || "Login failed. Please try again.");
+            }
         }
     };
 
@@ -69,8 +78,6 @@ function Login() {
                     > Signup
                     </Link>
                 </p>
-                {isLoading && "Logging in..."}
-                {isError && <p className="text-red-500 mt-2">{error?.data?.message || "Login failed"}</p>}
 
             </div>
         </>
