@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../../redux/api/auth'
+import { toast } from 'react-hot-toast';
 
 function Signup() {
     const [name, setName] = useState("");
@@ -18,9 +19,11 @@ function Signup() {
         try {
             const response = await register({ name, email, password }).unwrap(); //
             console.log("register Successful:", response);
+            toast.success("OTP sent to your email!");
             navigate("/verify-email");
         } catch (err) {
             console.error("register Failed:", err);
+            toast.error(err?.data?.message || "Registration failed. Please try again.");
         }
     };
     return (
