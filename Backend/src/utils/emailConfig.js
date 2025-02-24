@@ -17,20 +17,16 @@ dotenv.config()
 //         rejectUnauthorized: false //  Ignore self-signed certificate issues
 //     }
 // })
-
+console.log(process.env.AUTH_PASS);
 export const transport = nodemailer.createTransport({
-
-    // host: process.env.EMAIL_HOST,
-    // port: process.env.EMAIL_PORT,
-    // secure: false,
     service: 'gmail',
+    secure: true,
+    port: 465,
     auth: {
-        user: process.env.AUTH_USER,
+        user: process.env.EMAIL_FROM,
         pass: process.env.AUTH_PASS
     },
-    tls: {
-        rejectUnauthorized: false //  Ignore self-signed certificate issues
-    }
+
 })
 
 export const sendEmailOTP = async (req, user) => {
