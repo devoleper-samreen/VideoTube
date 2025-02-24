@@ -12,6 +12,9 @@ export const transport = nodemailer.createTransport({
     auth: {
         user: process.env.AUTH_USER,
         pass: process.env.AUTH_PASS
+    },
+    tls: {
+        rejectUnauthorized: false //  Ignore self-signed certificate issues
     }
 })
 
