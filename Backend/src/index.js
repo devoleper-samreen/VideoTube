@@ -22,7 +22,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const corsOptions = {
     origin: process.env.FRONTEND_HOST,
-    credential: true,
+    credentials: true,
     optionSuccesStatus: 200
 }
 
