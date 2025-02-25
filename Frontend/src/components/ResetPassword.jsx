@@ -5,23 +5,20 @@ import { useForgotPasswordMutation } from "../../redux/api/auth"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [ForgotPassword, { isLoading, isError }] = useForgotPasswordMutation()
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const response = ForgotPassword({ email }).unwrap();
-        console.log("Forgot Password Successful:", response);
-        toast.success(response.message || "Forgot Password Successfully!");
-        navigate("/login");
+
 
         try {
 
         } catch (error) {
             console.error("Forgot Password Failed:", error);
-            toast.error(error?.data?.message || "Forgot Password failed. Please try again.");
+
 
 
         }
@@ -32,22 +29,33 @@ const ForgotPassword = () => {
         <Container maxWidth="sm" sx={{ mt: 10, borderTop: 4, borderColor: "primary.main", boxShadow: 3, borderRadius: 2 }}>
             <Box sx={{ textAlign: "center", mt: 3, p: 3, borderRadius: 2 }}>
                 <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
-                    Forgot Password
+                    Reset Password
                 </Typography>
                 <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Enter your registered email to reset your password.
+                    Enter new password to reset your password.
                 </Typography>
                 <form onSubmit={handleSubmit}>
                     <TextField
                         fullWidth
-                        label="Email Address"
+                        label="New Password"
                         variant="outlined"
                         onChange={(event) =>
-                            setEmail(event.target.value)}
-                        type="email"
-                        value={email}
+                            setPassword(event.target.value)}
+                        type="password"
+                        value={password}
                         sx={{ mt: 6 }}
-                        helperText={isError ? "Enter a valid email" : ""}
+                        helperText={isError ? "Enter a valid  password" : ""}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Confirm Password"
+                        variant="outlined"
+                        onChange={(event) =>
+                            setConfirmPassword(event.target.value)}
+                        type="password"
+                        value={confirmPassword}
+                        sx={{ mt: 6 }}
+                        helperText={isError ? "Enter a valid  password" : ""}
                     />
                     <Button
                         type="submit"
