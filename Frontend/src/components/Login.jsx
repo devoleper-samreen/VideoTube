@@ -71,7 +71,7 @@ function Login() {
                     onClick={handleLogin}
                     disabled={isLoading}
                 >
-                    {isLoading ? <Loader /> : Submit}
+                    {isLoading ? <Loader /> : <p>Submit</p>}
                 </Button>
                 <p className='text-center mt-8'>
                     dont have account? <Link

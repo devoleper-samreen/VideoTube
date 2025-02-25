@@ -8,6 +8,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import OTPInput from './components/Otp';
 import { Toaster } from 'react-hot-toast';
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path='/verify-email' element={<OTPInput />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
       </Routes>
     </div>
   );
