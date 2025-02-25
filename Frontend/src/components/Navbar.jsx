@@ -6,10 +6,13 @@ import { RiVideoUploadFill } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { useGetMeQuery } from "../../redux/api/auth";
+import { FaUserCircle } from "react-icons/fa";
 
 
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const { data: user, isLoading } = useGetMeQuery();
 
   return (
     <div className="flex justify-between max-w-[1250px] w-full mx-auto bg-white px-10 py-6 h-14 items-center shadow-md fixed">
@@ -44,15 +47,24 @@ function Navbar({ toggleSidebar }) {
           <RiVideoUploadFill className="text-xl" />
           <span className="text-sm font-medium">Upload</span>
         </div>
-        <Link to="/login">
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ width: '100%', textTransform: 'none' }}
-          >
-            Login
-          </Button>
-        </Link>
+        {/*  Conditional Rendering */}
+        {user ?
+          (
+            <Link to="/profile">
+              <FaUserCircle className="text-4xl cursor-pointer text-gray-500" />
+            </Link>
+          ) :
+          (
+            <Link to="/login">
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ width: '100%', textTransform: 'none' }}
+              >
+                Login
+              </Button>
+            </Link>
+          )}
       </div>
     </div>
   );
