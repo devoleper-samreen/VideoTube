@@ -6,7 +6,11 @@ export const publishVideo = async (req, res) => {
         console.log("Publishing video");
 
         const { title, description } = req.body;
-        const { userId } = req.params
+        console.log("req.user", req.user);
+
+        const userId = req.user._id
+        console.log("userId", userId);
+
 
         if (!userId) {
             return res.status(400).json({

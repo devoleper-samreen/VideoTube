@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { usePublishVideoMutation } from "../../redux/api/upload";
 import { Button, TextField, Card, CardContent, Typography, CircularProgress } from "@mui/material";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Upload = () => {
     const [title, setTitle] = useState("");
@@ -8,6 +10,7 @@ const Upload = () => {
     const [video, setVideo] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
     const [publishVideo, { isLoading }] = usePublishVideoMutation();
+    const navigate = useNavigate()
 
     const handleUpload = async () => {
         if (!title || !description || !video || !thumbnail) {
@@ -22,10 +25,12 @@ const Upload = () => {
         formData.append("thumbnail", thumbnail);
 
         try {
-            publishVideo(formData).unwrap();
-            alert("Video published successfully");
+            await publishVideo(formData).unwrap();
+            toast.success("video upload successfully!")
+            navigate("/")
         } catch (error) {
-            alert("Error publishing video");
+            toast.error(error?.data?.message || "Error in video uploading");
+
         }
     };
 
@@ -49,7 +54,9 @@ const Upload = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     margin="normal"
                 />
+                <h2>video</h2>
                 <input type="file" accept="video/*" onChange={(e) => setVideo(e.target.files[0])} className="bg-gray-300 rounded p-2 my-2 cursor-pointer" />
+                <h2>thumbnail</h2>
                 <input type="file" className="bg-gray-300 rounded p-2 my-2 cursor-pointer" onChange={(e) => setThumbnail(e.target.files[0])} />
 
                 <Button

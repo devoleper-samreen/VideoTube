@@ -2,12 +2,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const uploadApi = createApi({
     reducerPath: "uploadApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/video" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: "http://localhost:3000/api/video",
+        credentials: "include"
+    }),
     endpoints: (builder) => ({
         publishVideo: builder.mutation({
             query: (formData) => ({
-                url: `/67bc64c8b637da42be0a5b9a
-`,
+                url: '/',
                 method: "POST",
                 body: formData,
             }),
