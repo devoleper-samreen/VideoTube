@@ -1,5 +1,7 @@
 import { useGetProfileQuery } from "../../redux/api/auth";
 import { Skeleton } from "@mui/material";
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const { data, isLoading } = useGetProfileQuery();
@@ -9,8 +11,8 @@ const Profile = () => {
     if (isLoading) {
         return (
             <>
-                <Skeleton variant="rectangular" width="100%" height={300} sx={{ mb: 10 }} />
-                <Skeleton variant="rectangular" width="100%" height={300} />;
+                <Skeleton variant="rectangular" width="90%" height={300} sx={{ mb: 10 }} />
+                <Skeleton variant="rectangular" width="90%" height={300} />;
             </>
 
         )
@@ -40,7 +42,16 @@ const Profile = () => {
             </div>
 
             {/* User Info */}
-            <div className="mt-26 ml-8">
+            <div className="mt-26 ml-8 border-t-4 rounded pt-12">
+                <Link to="/login">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ textTransform: 'none', float: 'right' }}
+                    >
+                        Edit Profile
+                    </Button>
+                </Link>
                 <h2 className="text-xl font-bold mb-4">Name</h2>
                 <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
                     {profile.userDetail.name}
