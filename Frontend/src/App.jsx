@@ -10,6 +10,8 @@ import OTPInput from './components/Otp';
 import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import ProtectedRoute from './protected/Protected'
+import Content from './components/content';
 
 function App() {
   return (
@@ -26,6 +28,11 @@ function App() {
         <Route path='/verify-email' element={<OTPInput />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
+
+        {/* Protected Route */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/content" element={<Content />} />
+        </Route>
       </Routes>
     </div>
   );

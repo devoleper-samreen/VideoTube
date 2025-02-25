@@ -289,5 +289,20 @@ export const logout = async (req, res) => {
     }
 }
 
+export const getMe = async (req, res) => {
+    try {
+        return res.json({
+            message: "User fetched successfully",
+            user: req.user
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch user data",
+            error: error.message
+        });
+    }
+};
+
+
 
 

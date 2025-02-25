@@ -47,8 +47,11 @@ export const authApi = createApi({
                 method: "POST",
                 body: data,
             })
-        })
+        }),
+        getMe: builder.query({
+            query: () => "me",
+        }),
     })
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useOtpVerifyMutation, useForgotPasswordMutation, useResetPasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useOtpVerifyMutation, useForgotPasswordMutation, useResetPasswordMutation, useGetMeQuery } = authApi;

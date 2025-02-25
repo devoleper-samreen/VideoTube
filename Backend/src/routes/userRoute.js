@@ -1,5 +1,5 @@
 import express from "express"
-import { registration, login, logout, verifyEmail } from "../controllers/userAuth.js"
+import { registration, login, logout, verifyEmail, getMe } from "../controllers/userAuth.js"
 import { verifyToken } from "../middelwares/verifyJWT.js"
 import { refreshAccessToken } from "../controllers/refreshAccToken.js"
 import { getProfile, updateProfile } from "../controllers/profile.js"
@@ -29,5 +29,6 @@ router.patch('/profile', verifyToken, upload.fields([
 router.patch('/change-password', verifyToken, changePassword)
 router.post('/forgot-password', forgotPassword)
 router.patch('/reset-password/:id/:token', resetPassword)
+router.get('/me', verifyToken, getMe)
 
 export default router
