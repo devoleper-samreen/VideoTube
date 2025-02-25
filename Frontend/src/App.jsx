@@ -12,6 +12,7 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import ProtectedRoute from './protected/Protected'
 import Content from './components/content';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         {/* Protected Route */}
         <Route element={<ProtectedRoute />}>
           <Route path="/content" element={<Content />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </div>
