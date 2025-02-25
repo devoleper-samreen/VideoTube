@@ -9,6 +9,7 @@ import Login from './components/Login';
 import OTPInput from './components/Otp';
 import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/verify-email' element={<OTPInput />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
       </Routes>
     </div>
   );
