@@ -2,7 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authApi = createApi({
     reducerPath: "videoApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/user/" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: "http://localhost:3000/api/user/",
+        credentials: "include",
+    }),
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({

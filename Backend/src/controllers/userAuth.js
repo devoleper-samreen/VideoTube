@@ -231,7 +231,7 @@ export const login = async (req, res) => {
         //send cookie
         const options = {
             httpOnly: true,
-            secure: true
+            // secure: true
         }
         console.log("options set");
 
