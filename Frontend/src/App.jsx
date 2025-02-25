@@ -12,6 +12,7 @@ import ProtectedRoute from './protected/Protected'
 import Content from './components/content';
 import Profile from './components/Profile';
 import Layout from './layout/layout';
+import Feed from './components/Feed';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         {/* routes with navbar and sidebar */}
         <Route path='/' element={<Layout />} >
+          <Route index element={<Feed />} />
           <Route path="/search/:searchQuery" element={<Search />} />
           <Route path="/playing" element={<PlayingVideo />} />
 
