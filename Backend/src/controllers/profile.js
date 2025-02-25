@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 export const getProfile = async (req, res) => {
     try {
         const userId = req.user.id;
+        console.log("User ID:", userId);
 
         if (!userId) {
             return res.status(400).json({
@@ -17,12 +18,18 @@ export const getProfile = async (req, res) => {
         const profile = await Profile.findOne({
             userDetail: userId
         }).populate("userDetail", "name email");
+        console.log("Profile Found:", profile);
 
         if (!profile) {
-            return res.status(404).json({
-                status: "failed",
-                message: "Profile not found"
+            console.log("Profile not found, creating a new profile...");
+            profile = await Profile.create({
+                userDetail: userId,
+                description: "",
+                profileImage: "",
+                coverImage: "",
             });
+
+            console.log("New Profile Created:", profile);
         }
 
         return res.status(200).json({
