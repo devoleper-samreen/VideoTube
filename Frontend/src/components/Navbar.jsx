@@ -8,11 +8,13 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useGetMeQuery } from "../../redux/api/auth";
 import { FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: user, isLoading } = useGetMeQuery();
+  const navigate = useNavigate();
 
   return (
     <div className="flex justify-between max-w-[1250px] w-full mx-auto bg-white px-10 py-6 h-14 items-center shadow-md fixed">
@@ -43,7 +45,7 @@ function Navbar({ toggleSidebar }) {
           </span>
         </div>
         {/* Upload Video Button */}
-        <div className="px-4 py-2 border-[1px] border-gray-400 rounded-full flex items-center space-x-2 hover:bg-gray-00 cursor-pointer transition duration-300">
+        <div className="px-4 py-2 border-[1px] border-gray-400 rounded-full flex items-center space-x-2 hover:bg-gray-00 cursor-pointer transition duration-300" onClick={() => navigate('/upload')}>
           <RiVideoUploadFill className="text-xl" />
           <span className="text-sm font-medium">Upload</span>
         </div>
@@ -69,6 +71,7 @@ function Navbar({ toggleSidebar }) {
     </div>
   );
 }
+
 Navbar.propTypes = {
   toggleSidebar: PropTypes.func.isRequired,
 };
