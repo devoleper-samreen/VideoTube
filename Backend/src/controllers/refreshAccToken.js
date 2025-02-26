@@ -3,7 +3,7 @@ import { User } from "../models/user.js"
 import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js"
 
 export const refreshAccessToken = async (req, res) => {
-    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+    const incomingRefreshToken = req.cookies.refreshToken;
 
     if (!incomingRefreshToken) {
         return res.status(401).json({
@@ -30,19 +30,21 @@ export const refreshAccessToken = async (req, res) => {
             })
         }
 
-        if (incomingRefreshToken !== user?.refreshToken) {
-            return res.status(402).json({
-                message: "Invalid refresh token: Token mismatch"
-            })
-        }
+        // if (incomingRefreshToken !== user?.refreshToken) {
+        //     return res.status(402).json({
+        //         message: "Invalid refresh token: Token mismatch"
+        //     })
+        // }
+        const accessToken = generateAccessToken(user)
+        const newRefreshToken = generateRefreshToken(user)
+        user.refreshToken = newRefreshToken;
+        await user.save();
 
         const options = {
             httpOnly: true,
             secure: true,
             sameSite: 'Strict'
         }
-        const accessToken = generateAccessToken(user)
-        const newRefreshToken = generateRefreshToken(user)
 
         return res.status(200)
             .cookie("accessToken", accessToken, options)
