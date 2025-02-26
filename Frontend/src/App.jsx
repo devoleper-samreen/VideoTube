@@ -14,6 +14,7 @@ import Profile from './components/Profile';
 import Layout from './layout/layout';
 import Feed from './components/Feed';
 import Upload from './components/Upload';
+import ProfileUpdate from "./components/ProfileUpdate";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/content" element={<Content />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/upload" element={<Upload />} />
+            <Route path="/edit-profile" element={<ProfileUpdate />} />
           </Route>
         </Route>
 

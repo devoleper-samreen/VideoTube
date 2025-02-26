@@ -54,17 +54,18 @@ const Profile = () => {
                 />
                 {/* User Picture */}
                 <img
-                    src={profile.userDetail.avatar || ''}
+                    src={profile.profilePicture || ''}
                     alt="User"
-                    className="w-32 h-32 bg-amber-400 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-12"
+                    className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-12"
                 />
             </div>
 
             {/* User Info */}
-            <div className="mt-26 ml-8 border-t-4 rounded pt-12">
+            <div className="mt-26 ml-8 border-t-4 rounded pt-6">
                 <Stack direction="column" spacing={2}>
                     <Link to="/edit-profile">
                         <Button
+                            onClick={() => navigate('/edit-profile')}
                             variant="contained"
                             color="primary"
                             sx={{ textTransform: 'none', float: 'right', textAlign: 'center' }}

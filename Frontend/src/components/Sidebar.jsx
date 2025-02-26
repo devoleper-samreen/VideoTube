@@ -35,6 +35,7 @@ function Sidebar({ isOpen }) {
       id: 3,
       name: "Subscriptions",
       icon: <MdOutlineSubscriptions />,
+      path: "/subscriptions",
     },
   ];
   const sidebarItems2 = [
@@ -158,10 +159,8 @@ function Sidebar({ isOpen }) {
               key={item.id}
               className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-2"
             >
-              <Link path={item.path}>
-                <div className="text-xl cursor-pointer">{item.icon}</div>
-                <span className="cursor-pointer">{item.name}</span>
-              </Link>
+              <div className="text-xl cursor-pointer">{item.icon}</div>
+              <span className="cursor-pointer">{item.name}</span>
 
             </div>
 
