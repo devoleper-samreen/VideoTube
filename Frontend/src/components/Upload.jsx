@@ -1,8 +1,22 @@
 import { useState } from "react";
 import { usePublishVideoMutation } from "../../redux/api/upload";
-import { Button, TextField, Card, CardContent, Typography, CircularProgress } from "@mui/material";
+import { Button, TextField, Card, CardContent, Typography, CircularProgress, Stack } from "@mui/material";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 const Upload = () => {
     const [title, setTitle] = useState("");
@@ -54,10 +68,41 @@ const Upload = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     margin="normal"
                 />
-                <h2>video</h2>
-                <input type="file" accept="video/*" onChange={(e) => setVideo(e.target.files[0])} className="bg-gray-300 rounded p-2 my-2 cursor-pointer" />
-                <h2>thumbnail</h2>
-                <input type="file" className="bg-gray-300 rounded p-2 my-2 cursor-pointer" onChange={(e) => setThumbnail(e.target.files[0])} />
+                <Stack direction="column" spacing={3} sx={{ mt: 3 }}>
+
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                        color="secondary"
+                    >
+                        Upload Thumbnail
+                        <VisuallyHiddenInput
+                            type="file"
+                            onChange={(e) => setThumbnail(e.target.files[0])}
+                            multiple
+                        />
+                    </Button>
+
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        color="secondary"
+                        startIcon={<CloudUploadIcon />}
+                    >
+                        Upload Video
+                        <VisuallyHiddenInput
+                            type="file"
+                            onChange={(e) => setVideo(e.target.files[0])}
+                            multiple
+                        />
+                    </Button>
+                </Stack>
+
 
                 <Button
                     variant="contained"
