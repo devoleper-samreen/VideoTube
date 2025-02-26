@@ -14,7 +14,11 @@ const customBaseQuery = async (args, api, extraOptions) => {
         console.log("Access Token expired, trying to refresh...");
 
         // Refresh Token API Call
-        const refreshResult = await baseQuery("user/refresh-access-token", api, extraOptions);
+        const refreshResult = await baseQuery({
+            url: "user/refresh-access-token",
+            method: "POST",
+        }, api, extraOptions);
+        console.log(refreshResult);
 
         // Agar refresh token se naya access token mila
         if (refreshResult?.data) {

@@ -19,6 +19,7 @@ import { PiLightbulbLight } from "react-icons/pi";
 import { SiStylelint } from "react-icons/si";
 import { MdPodcasts } from "react-icons/md";
 import { BiVideo } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 
 function Sidebar({ isOpen }) {
@@ -27,6 +28,7 @@ function Sidebar({ isOpen }) {
       id: 1,
       name: "Home",
       icon: <GoHome />,
+      path: "/",
     },
 
     {
@@ -156,9 +158,13 @@ function Sidebar({ isOpen }) {
               key={item.id}
               className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-2"
             >
-              <div className="text-xl cursor-pointer">{item.icon}</div>
-              <span className="cursor-pointer">{item.name}</span>
+              <Link path={item.path}>
+                <div className="text-xl cursor-pointer">{item.icon}</div>
+                <span className="cursor-pointer">{item.name}</span>
+              </Link>
+
             </div>
+
           );
         })}
       </div>
@@ -232,7 +238,7 @@ function Sidebar({ isOpen }) {
       </span>
       <br />
       <p className="text-xs text-gray-500 mt-3">© 2025 VideoTube</p>
-    </div>
+    </div >
   );
 }
 Sidebar.propTypes = {
