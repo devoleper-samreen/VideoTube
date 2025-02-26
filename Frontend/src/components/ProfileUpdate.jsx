@@ -3,8 +3,10 @@ import { useUpdateProfileMutation } from "../../redux/api/profileApi";
 import { TextField, Button, Avatar, Typography, Paper, Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProfileUpdate = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         description: ""
@@ -12,7 +14,7 @@ const ProfileUpdate = () => {
     const [profilePic, setProfilePic] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
 
-    const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+    const [updateProfile, { isLoading, isError, error, success }] = useUpdateProfileMutation();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,11 +35,18 @@ const ProfileUpdate = () => {
         if (profilePic) updatedData.append("profilePicture", profilePic);
         if (coverImage) updatedData.append("coverImage", coverImage);
 
-        await updateProfile(updatedData);
-        setFormData({ name: "", description: "" });
-        setProfilePic(null);
-        setCoverImage(null);
-        navigate("/profile");
+        try {
+            await updateProfile(updatedData);
+            setFormData({ name: "", description: "" });
+            setProfilePic(null);
+            setCoverImage(null);
+            toast.success(success?.message || "Profile updated successfully!");
+            navigate("/profile");
+
+        } catch (error) {
+            toast.error(error?.message || "An error occurred. Please try again.");
+
+        }
 
     };
 
@@ -52,6 +61,7 @@ const ProfileUpdate = () => {
                     margin="normal"
                     value={formData.name}
                     onChange={handleChange}
+                    required
                 />
                 <TextField
                     label="Description"
@@ -62,6 +72,7 @@ const ProfileUpdate = () => {
                     rows={3}
                     value={formData.description}
                     onChange={handleChange}
+                    required
                 />
 
                 <Box display="flex" alignItems="center" gap={2} mt={2}>
