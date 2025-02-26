@@ -1,11 +1,17 @@
 import { useGetProfileQuery } from "../../redux/api/auth";
-import { Skeleton } from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLogoutMutation } from "../../redux/api/auth"
+import { toast } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+    const navigate = useNavigate();
     const { data, isLoading } = useGetProfileQuery();
     console.log(data);
+    const [logout, { isError }] = useLogoutMutation();
 
 
     if (isLoading) {
@@ -23,6 +29,19 @@ const Profile = () => {
     }
 
     const { profile } = data;
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+
+            window.location.href = "/";
+            toast.success('Logged out successfully');
+            // navigate('/');
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="w-[100%] p-4 mt-2 shadow-md">
@@ -43,15 +62,31 @@ const Profile = () => {
 
             {/* User Info */}
             <div className="mt-26 ml-8 border-t-4 rounded pt-12">
-                <Link to="/login">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ textTransform: 'none', float: 'right' }}
-                    >
-                        Edit Profile
-                    </Button>
-                </Link>
+                <Stack direction="column" spacing={2}>
+                    <Link to="/edit-profile">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ textTransform: 'none', float: 'right', textAlign: 'center' }}
+                        >
+                            Edit Profile
+
+                        </Button>
+                    </Link>
+
+                    <Link>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ textTransform: 'none', float: 'right' }}
+                            onClick={handleLogout}
+                        >
+                            logout
+                            <LogoutIcon sx={{ ml: 1 }} />
+                        </Button>
+                    </Link>
+                </Stack>
+
                 <h2 className="text-xl font-bold mb-4">Name</h2>
                 <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
                     {profile.userDetail.name}
