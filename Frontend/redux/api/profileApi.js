@@ -11,6 +11,7 @@ export const profileApi = createApi({
                 method: "PATCH",
                 body: data,
             }),
+            invalidatesTags: ["User"],
         }),
 
     })

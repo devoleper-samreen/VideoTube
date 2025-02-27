@@ -6,12 +6,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useLogoutMutation } from "../../redux/api/auth"
 import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { data, isLoading } = useGetProfileQuery();
+    const { data, isLoading, refetch } = useGetProfileQuery();
     console.log(data);
     const [logout, { isError }] = useLogoutMutation();
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
 
     if (isLoading) {

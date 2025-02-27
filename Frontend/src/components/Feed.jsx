@@ -3,13 +3,14 @@ import { Card, CardContent, CardMedia, Typography, CircularProgress } from "@mui
 import { useGetMixedVideosQuery } from "../../redux/api/videoApi";
 
 const Feed = () => {
-    const { data, error, isLoading, isFetching } = useGetMixedVideosQuery();
+    const { data, error, isLoading, isFetching, refetch } = useGetMixedVideosQuery();
     const [videos, setVideos] = useState([]);
 
     useEffect(() => {
         if (data) {
             setVideos((prevVideos) => [...prevVideos, ...data.videos]);
         }
+        refetch();
     }, [data]);
 
     // const handleScroll = () => {

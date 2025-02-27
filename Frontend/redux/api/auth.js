@@ -55,6 +55,7 @@ export const authApi = createApi({
         }),
         getProfile: builder.query({
             query: () => "user/profile",
+            providesTags: ["User"],
         }),
     })
 });

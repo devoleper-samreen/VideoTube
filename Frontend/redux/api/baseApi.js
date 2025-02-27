@@ -18,6 +18,7 @@ const customBaseQuery = async (args, api, extraOptions) => {
             url: "user/refresh-access-token",
             method: "POST",
         }, api, extraOptions);
+
         console.log(refreshResult);
 
         // Agar refresh token se naya access token mila
@@ -27,7 +28,7 @@ const customBaseQuery = async (args, api, extraOptions) => {
             //Original request ko dobara bhejo
             result = await baseQuery(args, api, extraOptions);
         } else {
-            console.log("Refresh Token bhi expire ho gaya, user ko login karna padega.");
+            console.log("Refresh Token expire ho gaya, user ko login karna padega.");
         }
     }
 
