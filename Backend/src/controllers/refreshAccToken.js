@@ -42,9 +42,13 @@ export const refreshAccessToken = async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: true,
-            sameSite: 'Strict'
+            secure: false, //secure for production
+            sameSite: 'none' //Strict for production
         }
+
+        // Purana token clear kar do
+        res.clearCookie("accessToken", options);
+        res.clearCookie("refreshToken", options);
 
         return res.status(200)
             .cookie("accessToken", accessToken, options)

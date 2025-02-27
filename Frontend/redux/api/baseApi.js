@@ -22,7 +22,9 @@ const customBaseQuery = async (args, api, extraOptions) => {
         console.log(refreshResult);
 
         // Agar refresh token se naya access token mila
-        if (refreshResult?.data) {
+        if (refreshResult?.data.data.accessToken) {
+            console.log(refreshResult.data.data.accessToken);
+
             console.log("Access Token refreshed!");
 
             //Original request ko dobara bhejo

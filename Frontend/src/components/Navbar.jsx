@@ -16,6 +16,7 @@ function Navbar({ toggleSidebar }) {
   const { data: user, isLoading } = useGetMeQuery();
   const navigate = useNavigate();
 
+
   return (
     <div className="flex justify-between max-w-[1250px] w-full mx-auto bg-white px-10 py-6 h-14 items-center shadow-md fixed">
       <div className="flex items-center space-x-4">
