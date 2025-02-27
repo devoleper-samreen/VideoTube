@@ -30,11 +30,6 @@ export const refreshAccessToken = async (req, res) => {
             })
         }
 
-        // if (incomingRefreshToken !== user?.refreshToken) {
-        //     return res.status(402).json({
-        //         message: "Invalid refresh token: Token mismatch"
-        //     })
-        // }
         const accessToken = generateAccessToken(user)
         const newRefreshToken = generateRefreshToken(user)
         user.refreshToken = newRefreshToken;
@@ -42,7 +37,7 @@ export const refreshAccessToken = async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: false, //secure for production
+            secure: true, //secure for production
             sameSite: 'none' //Strict for production
         }
 

@@ -14,7 +14,7 @@ const Feed = () => {
         }
         console.log('feed data', data);
 
-        //refetch();
+        refetch();
     }, [data]);
 
     if (isFetching) {
@@ -44,7 +44,7 @@ const Feed = () => {
                             {/* Left Side - Profile Picture */}
                             <img
                                 src={video?.userProfilePicture || "/default-avatar.png"}  // Default image if null
-                                alt="Profile"
+
                                 className="w-8 h-8 rounded-full object-cover bg-amber-300"
                             />
 
