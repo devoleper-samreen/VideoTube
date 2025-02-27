@@ -9,6 +9,9 @@ export const videoApi = createApi({
         getMixedVideos: builder.query({
             query: () => "feed/mixed",
         }),
+        getVideoById: builder.query({
+            query: (videoId) => `videos/${videoId}`,
+        }),
     }),
 });
 

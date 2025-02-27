@@ -15,6 +15,7 @@ import Layout from './layout/layout';
 import Feed from './components/Feed';
 import Upload from './components/Upload';
 import ProfileUpdate from "./components/ProfileUpdate";
+import VideoPage from './components/VideoPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/edit-profile" element={<ProfileUpdate />} />
+            <Route path="/video/:videoId" element={<VideoPage />} />
           </Route>
         </Route>
 
