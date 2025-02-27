@@ -23,7 +23,9 @@ function Navbar({ toggleSidebar }) {
           className="text-xl cursor-pointer hover:bg-gray-100 rounded-full"
           onClick={toggleSidebar}
         />
-        <img src={OIP} alt="" className="w-22 cursor-pointer" />
+        <Link to="/">
+          <img src={OIP} alt="" className="w-22 cursor-pointer" />
+        </Link>
       </div>
       <div className="flex w-[35%] items-center">
         <div className="w-[100%] px-4 py-2 border-[1px] border-gray-400 rounded-full">

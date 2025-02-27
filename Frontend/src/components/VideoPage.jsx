@@ -13,7 +13,7 @@ const VideoPage = () => {
 
     return (
         <div className="p-4">
-            <video controls className="w-full h-[350px] max-w-3xl mx-auto">
+            <video controls className="w-full h-[400px] max-w-3xl mx-auto shadow-lg bg-gray-300 rounded-2xl">
                 <source src={data?.video.video} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>

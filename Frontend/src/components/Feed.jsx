@@ -10,7 +10,7 @@ const Feed = () => {
 
     useEffect(() => {
         if (data) {
-            setVideos((prevVideos) => [...prevVideos, ...data.videos]);
+            setVideos(data.videos);
         }
         console.log(data);
 
@@ -18,28 +18,44 @@ const Feed = () => {
     }, [data]);
 
 
-    if (isLoading) return <CircularProgress className="flex justify-center mt-4" />;
+    if (isLoading) {
+        return (
+            <div className="h-screen w-screen flex justify-center items-center">
+                <CircularProgress />;
+            </div>
+        )
+
+    }
     if (error) return <div className="text-center text-red-500">Failed to load videos.</div>;
 
     return (
-        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
+        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 cursor-pointer">
             {videos?.map((video) => (
                 <Link to={`/video/${video._id}`} key={video._id}>
-                    <Card className="rounded-lg overflow-hidden shadow-lg">
-                        <CardMedia component="img" image={video?.thumbnail} alt={video?.title} height="140" />
-                        <CardContent>
-                            <Typography variant="h6" component="h3" noWrap>
-                                {video?.title}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                                {video?.channelName}
-                                {video._id}
-                            </Typography>
+                    <Card className="rounded-lg overflow-hidden shadow-lg h-[260px]">
+                        <CardMedia component="img" image={video?.thumbnail} alt={video?.title} sx={{ height: 200 }} />
+                        <CardContent className="flex items-center justify-between">
+                            {/* Left Side - Profile Picture */}
+                            <img
+                                src={video?.userProfilePicture || "/default-avatar.png"}  // Default image if null
+                                alt="Profile"
+                                className="w-8 h-8 rounded-full object-cover bg-amber-300"
+                            />
+
+                            {/* Right Side - Title & Channel Name */}
+                            <div className="flex flex-col text-right w-full ml-3">
+                                <Typography variant="h6" component="h3" noWrap>
+                                    {video?.title}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    {video?.channelName}
+                                </Typography>
+                            </div>
                         </CardContent>
                     </Card>
                 </Link>
             ))}
-            {isFetching && <CircularProgress className="flex justify-center mt-4" />}
+            {isFetching && <CircularProgress className="flex justify-center items-center mt-10" />}
         </div>
     );
 };
