@@ -8,7 +8,6 @@ const baseQuery = fetchBaseQuery({
 // Custom Base Query jo Refresh Token Handle karega
 const customBaseQuery = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
-    console.log("Result : ", result);
 
     if (result?.error?.status == 401) {
 
@@ -17,13 +16,11 @@ const customBaseQuery = async (args, api, extraOptions) => {
             method: "POST",
         }, api, extraOptions);
 
-        console.log("refreshed result: ", refreshResult);
+        // console.log("refreshed result: ", refreshResult);
 
         // Agar 401
         if (refreshResult?.error?.status == 401) {
-            console.log(refreshResult.error.status);
             console.log('refresh token bhi exipre ho gaya');
-
         }
 
         // Agar naya access token mila

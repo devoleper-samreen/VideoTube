@@ -15,10 +15,11 @@ import { useGetProfileQuery } from "../../redux/api/auth";
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: user, isLoading } = useGetMeQuery();
-  const { data: profile } = useGetProfileQuery()
+  // const { data: profile } = useGetProfileQuery()
   const navigate = useNavigate();
 
-  console.log('profile data', profile);
+  // console.log('profile data', profile);
+  const profile = ''
 
 
   return (

@@ -13,17 +13,8 @@ const Feed = () => {
         if (data) {
             setVideos(data.videos);
         }
-        console.log("data", data);
-
-
         refetch();
     }, [data]);
-
-    if (isFetching) {
-        console.log("API se fresh data aa raha hai");
-    } else {
-        console.log("Cache se data load ho raha hai");
-    }
 
 
     if (isLoading) {
