@@ -29,7 +29,37 @@ export const getMixedVideos = async (req, res) => {
             },
             {
                 $limit: 20
-            }
+            },
+            {
+                $lookup: {
+                    from: "users", // Your user collection name
+                    localField: "owner",
+                    foreignField: "_id",
+                    as: "ownerDetails"
+                }
+            },
+            {
+                $unwind: "$ownerDetails"
+            },
+            {
+                $lookup: {
+                    from: "profiles", // Profile collection name
+                    localField: "ownerDetails._id",
+                    foreignField: "userDetail",
+                    as: "profileDetails"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$profileDetails",
+                    preserveNullAndEmptyArrays: true // Keep videos even if no profile exists
+                }
+            },
+            {
+                $addFields: {
+                    "ownerDetails.profilePicture": "$profileDetails.profilePicture"
+                }
+            },
         ]);
 
         return res.status(200).json({
@@ -44,6 +74,8 @@ export const getMixedVideos = async (req, res) => {
         });
     }
 };
+
+
 
 export const getRandomVideos = async (req, res) => {
     try {

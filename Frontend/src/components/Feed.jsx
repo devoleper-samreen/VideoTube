@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardMedia, Typography, CircularProgress } from "@mui/material";
 import { useGetMixedVideosQuery } from "../../redux/api/videoApi";
 import { Link } from "react-router-dom";
+import Loader from "./loader"
 
 
 const Feed = () => {
@@ -12,7 +13,8 @@ const Feed = () => {
         if (data) {
             setVideos(data.videos);
         }
-        console.log('feed data', data);
+        console.log("data", data);
+
 
         refetch();
     }, [data]);
@@ -27,25 +29,25 @@ const Feed = () => {
     if (isLoading) {
         return (
             <div className="h-screen w-screen flex justify-center items-center">
-                <CircularProgress />;
+                <Loader />
             </div>
         )
 
     }
-    if (error) return <div className="text-center text-red-500">Failed to load videos.</div>;
+    if (error) return <div className="flex items-center justify-center h-screen text-red-500">Failed to load videos.</div>;
 
     return (
         <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 cursor-pointer">
             {videos?.map((video) => (
                 <Link to={`/video/${video._id}`} key={video._id}>
-                    <Card className="rounded-lg overflow-hidden shadow-lg h-[260px]">
+                    <Card className="rounded-lg overflow-hidden shadow-lg min-h-[260px]">
                         <CardMedia component="img" image={video?.thumbnail} alt={video?.title} sx={{ height: 200 }} />
                         <CardContent className="flex items-center justify-between">
                             {/* Left Side - Profile Picture */}
                             <img
-                                src={video?.userProfilePicture || "/default-avatar.png"}  // Default image if null
+                                src={video?.profileDetails?.profilePicture}
 
-                                className="w-8 h-8 rounded-full object-cover bg-amber-300"
+                                className="min-w-10 min-h-10 max-w-12 max-h-12 rounded-full object-cover bg-amber-300"
                             />
 
                             {/* Right Side - Title & Channel Name */}
@@ -54,14 +56,13 @@ const Feed = () => {
                                     {video?.title}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    {video?.channelName}
+                                    {video?.ownerDetails?.name}
                                 </Typography>
                             </div>
                         </CardContent>
                     </Card>
                 </Link>
             ))}
-            {isFetching && <CircularProgress className="flex justify-center items-center mt-10" />}
         </div>
     );
 };
