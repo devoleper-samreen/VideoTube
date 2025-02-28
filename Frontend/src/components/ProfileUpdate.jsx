@@ -4,6 +4,7 @@ import { TextField, Button, Avatar, Typography, Paper, Box } from "@mui/material
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Loader from "./loader"
 
 const ProfileUpdate = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const ProfileUpdate = () => {
     const [profilePic, setProfilePic] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
 
-    const [updateProfile, { isLoading, isError, error, success }] = useUpdateProfileMutation();
+    const [updateProfile, { isLoading, success }] = useUpdateProfileMutation();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,6 +30,16 @@ const ProfileUpdate = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!profilePic) {
+            toast.error("Profile Picture is required")
+            return
+        }
+
+        if (!coverImage) {
+            toast.error("Cover Image is required")
+            return
+        }
         const updatedData = new FormData();
         updatedData.append("name", formData.name);
         updatedData.append("description", formData.description);
@@ -36,11 +47,10 @@ const ProfileUpdate = () => {
         if (coverImage) updatedData.append("coverImage", coverImage);
 
         try {
-            await updateProfile(updatedData);
-            setFormData({ name: "", description: "" });
-            setProfilePic(null);
-            setCoverImage(null);
-            toast.success(success?.message || "Profile updated successfully!");
+            const response = await updateProfile(updatedData);
+            console.log("response : ", response);
+
+            toast.success(response?.data?.message || "Profile updated successfully!");
             navigate("/profile");
 
         } catch (error) {
@@ -92,7 +102,7 @@ const ProfileUpdate = () => {
                 </Box>
 
                 <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3 }} disabled={isLoading}>
-                    {isLoading ? "Updating..." : "Update Profile"}
+                    {isLoading ? <Loader /> : "Update Profile"}
                 </Button>
             </form>
         </Paper>

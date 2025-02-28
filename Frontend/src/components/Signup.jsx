@@ -18,12 +18,10 @@ function Signup() {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await register({ name, email, password }).unwrap(); //
-            console.log("register Successful:", response);
+            const response = await register({ name, email, password }).unwrap();
             toast.success("OTP sent to your email!");
             navigate("/verify-email");
         } catch (err) {
-            console.error("register Failed:", err);
             toast.error(err?.data?.message || "Registration failed. Please try again.");
         }
     };

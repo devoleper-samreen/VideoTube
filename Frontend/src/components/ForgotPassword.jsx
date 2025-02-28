@@ -10,14 +10,13 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [ForgotPassword, { isLoading, isError }] = useForgotPasswordMutation()
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const response = ForgotPassword({ email }).unwrap();
-        console.log("Forgot Password Successful:", response);
-        toast.success(response.message || "Forgot Password Successfully!");
-        navigate("/login");
+    const handleSubmit = async (event) => {
+        event.preventDefault()
 
         try {
+            const response = await ForgotPassword({ email }).unwrap();
+            toast.success(response?.message || "Forgot Password Successfully!");
+            navigate("/login");
 
         } catch (error) {
             console.error("Forgot Password Failed:", error);

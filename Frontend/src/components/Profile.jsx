@@ -11,20 +11,28 @@ import { useEffect } from "react";
 const Profile = () => {
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useGetProfileQuery();
-    console.log(data);
     const [logout, { isError }] = useLogoutMutation();
 
     useEffect(() => {
         refetch();
-    }, []);
+    }, [data]);
 
 
     if (isLoading) {
         return (
-            <>
-                <Skeleton variant="rectangular" width="90%" height={300} sx={{ mb: 10 }} />
-                <Skeleton variant="rectangular" width="90%" height={300} />;
-            </>
+            <div className="flex flex-col justify-center items-center">
+                <Skeleton
+                    variant="rectangular"
+                    width="80%"
+                    height={300}
+                    sx={{ m: 2, borderRadius: 2 }} />
+                <Skeleton
+                    variant="rectangular"
+                    width="80%"
+                    height={300}
+                    sx={{ m: 2, borderRadius: 2 }}
+                />;
+            </div>
 
         )
     }

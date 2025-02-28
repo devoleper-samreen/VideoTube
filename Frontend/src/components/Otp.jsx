@@ -42,11 +42,9 @@ const OTPInput = ({ onVerify }) => {
                 otp: enteredOtp
             }).unwrap();
 
-            console.log("OTP Verified Successfully:", response);
             toast.success("OTP Verified Successfully");
             navigate("/login");
         } catch (error) {
-            console.error("OTP Verification Failed:", error);
             toast.error(error.message || "OTP Verification Failed. Try again.");
         }
     };

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { usePublishVideoMutation } from "../../redux/api/upload";
-import { Button, TextField, Card, CardContent, Typography, CircularProgress, Stack } from "@mui/material";
+import { Button, TextField, Card, CardContent, Typography, Stack } from "@mui/material";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Loader from "./loader"
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -23,8 +24,31 @@ const Upload = () => {
     const [description, setDescription] = useState("");
     const [video, setVideo] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
-    const [publishVideo, { isLoading }] = usePublishVideoMutation();
+    const [videoPreview, setVideoPreview] = useState("");
+    const [thumbnailPreview, setThumbnailPreview] = useState("");
     const navigate = useNavigate()
+
+    const [publishVideo, { isLoading }] = usePublishVideoMutation();
+
+    // Handle Thumbnail Upload
+    const handleThumbnailChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setThumbnail(file);
+            setThumbnailPreview(URL.createObjectURL(file)); // Thumbnail preview
+        }
+    };
+
+    // Handle Video Upload
+    const handleVideoChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setVideo(file);
+            setVideoPreview(URL.createObjectURL(file)); // Video preview
+        }
+    };
+
+
 
     const handleUpload = async () => {
         if (!title || !description || !video || !thumbnail) {
@@ -81,10 +105,14 @@ const Upload = () => {
                         Upload Thumbnail
                         <VisuallyHiddenInput
                             type="file"
-                            onChange={(e) => setThumbnail(e.target.files[0])}
+                            onChange={handleThumbnailChange}
                             multiple
                         />
                     </Button>
+                    {/* Thumbnail Preview */}
+                    {thumbnailPreview && (
+                        <img src={thumbnailPreview} alt="Thumbnail Preview" style={{ width: "100%", maxHeight: 200, objectFit: "cover", borderRadius: 8 }} />
+                    )}
 
                     <Button
                         component="label"
@@ -97,10 +125,14 @@ const Upload = () => {
                         Upload Video
                         <VisuallyHiddenInput
                             type="file"
-                            onChange={(e) => setVideo(e.target.files[0])}
+                            onChange={handleVideoChange}
                             multiple
                         />
                     </Button>
+                    {/* Video Preview */}
+                    {videoPreview && (
+                        <video src={videoPreview} controls style={{ width: "100%", maxHeight: 300, borderRadius: 8 }} />
+                    )}
                 </Stack>
 
 
@@ -112,7 +144,7 @@ const Upload = () => {
                     onClick={handleUpload}
                     disabled={isLoading}
                 >
-                    {isLoading ? <CircularProgress size={24} /> : "Publish"}
+                    {isLoading ? <Loader /> : "Publish"}
                 </Button>
             </CardContent>
         </Card>

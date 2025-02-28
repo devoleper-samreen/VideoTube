@@ -17,13 +17,10 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await login({ email, password }).unwrap(); //
-            console.log("Login Successful:", response);
+            const response = await login({ email, password }).unwrap();
             toast.success(response.message || " Login Successfully!");
             navigate("/");
         } catch (err) {
-            console.error("Login Failed:", err);
-
             if (err?.data?.message === "User not found") {
                 toast.error("Email not registered!");
             } else if (err?.data?.message === "Invalid password") {
