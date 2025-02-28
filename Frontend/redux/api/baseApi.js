@@ -8,30 +8,32 @@ const baseQuery = fetchBaseQuery({
 // Custom Base Query jo Refresh Token Handle karega
 const customBaseQuery = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
+    console.log("Result : ", result);
 
-    // Agar Token Expire ho gaya (401 Unauthorized)
-    if (result?.error?.status === 401) {
-        console.log("Access Token expired, trying to refresh...");
+    if (result?.error?.status == 401) {
 
-        // Refresh Token API Call
         const refreshResult = await baseQuery({
             url: "user/refresh-access-token",
             method: "POST",
         }, api, extraOptions);
 
-        console.log(refreshResult);
+        console.log("refreshed result: ", refreshResult);
 
-        // Agar refresh token se naya access token mila
-        if (refreshResult?.data.data.accessToken) {
-            console.log(refreshResult.data.data.accessToken);
+        // Agar 401
+        if (refreshResult?.error?.status == 401) {
+            console.log(refreshResult.error.status);
+            console.log('refresh token bhi exipre ho gaya');
 
-            console.log("Access Token refreshed!");
-
-            //Original request ko dobara bhejo
-            result = await baseQuery(args, api, extraOptions);
-        } else {
-            console.log("Refresh Token expire ho gaya, user ko login karna padega.");
         }
+
+        // Agar naya access token mila
+        if (refreshResult?.data?.data?.accessToken) {
+            console.log("New Access Token:", refreshResult.data.data.accessToken);
+
+            // **Original Request Retry karein with New Token**
+            result = await baseQuery(args, api, extraOptions);
+        }
+
     }
 
     return result;

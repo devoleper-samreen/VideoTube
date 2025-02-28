@@ -26,12 +26,13 @@ function App() {
       <Routes>
         {/* routes with navbar and sidebar */}
         <Route path='/' element={<Layout />} >
-          <Route index element={<Feed />} />
+          {/* <Route index element={<Feed />} /> */}
           <Route path="/search/:searchQuery" element={<Search />} />
           <Route path="/playing" element={<PlayingVideo />} />
 
           {/* Protected Route */}
           <Route element={<ProtectedRoute />}>
+            <Route path='/' element={<Feed />} />
             <Route path="/content" element={<Content />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/upload" element={<Upload />} />
