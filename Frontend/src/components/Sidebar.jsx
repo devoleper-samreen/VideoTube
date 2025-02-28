@@ -19,7 +19,6 @@ import { PiLightbulbLight } from "react-icons/pi";
 import { SiStylelint } from "react-icons/si";
 import { MdPodcasts } from "react-icons/md";
 import { BiVideo } from "react-icons/bi";
-import { Link } from "react-router-dom";
 
 
 function Sidebar({ isOpen }) {
@@ -148,16 +147,16 @@ function Sidebar({ isOpen }) {
   return (
     <div
       className={`h-[calc(100vh-56px)] border-r-2 p-5 border-r-gray-200 bg-white transition-all duration-300 overflow-y-auto shadow-md
-      ${isOpen ? 'w-50' : 'w-16'}`}
+      ${isOpen ? 'w-50' : 'w-[70px]'}`}
       id='sidebar'
     >
       {/* Home */}
-      <div className=" space-y-3 items-center">
+      <div className="space-y-3 items-center">
         {sidebarItems.map((item) => {
           return (
             <div
               key={item.id}
-              className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-2"
+              className={`flex items-center space-x-6 duration-300 py-2 px-2 rounded-2xl  ${isOpen && "hover:bg-gray-300"}`}
             >
               <div className="text-xl cursor-pointer">{item.icon}</div>
               <span className="cursor-pointer">{item.name}</span>
@@ -179,7 +178,7 @@ function Sidebar({ isOpen }) {
           return (
             <div
               key={item.id}
-              className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-1"
+              className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
             >
               <div className="text-xl cursor-pointer">{item.icon}</div>
               <span className="cursor-pointer">{item.name}</span>
@@ -192,13 +191,13 @@ function Sidebar({ isOpen }) {
       {/* Explore */}
       <div className="mt-4 space-y-3 items-center">
         <div className="items-center space-x-2">
-          <h1 className=" font-semibold">Explore</h1>
+          {isOpen && <h1 className=" font-semibold">Explore</h1>}
         </div>
         {sidebarItems3.map((item) => {
           return (
             <div
               key={item.id}
-              className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-1"
+              className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
             >
               <div className="text-xl cursor-pointer">{item.icon}</div>
               <span className="cursor-pointer">{item.name}</span>
@@ -211,13 +210,13 @@ function Sidebar({ isOpen }) {
       {/* More section */}
       <div className="mt-4 space-y-3 items-center">
         <div className="items-center space-x-2">
-          <h1 className=" font-semibold">More From Videotube</h1>
+          {isOpen && <h1 className="font-semibold">More From Videotube</h1>}
         </div>
         {sidebarItems4.map((item) => {
           return (
             <div
               key={item.id}
-              className="flex items-center space-x-6 hover:bg-gray-300 duration-300 rounded-xl p-1"
+              className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
             >
               <div className="text-xl cursor-pointer text-red-500">
                 {item.icon}
@@ -226,17 +225,10 @@ function Sidebar({ isOpen }) {
             </div>
           );
         })}
-        <hr />
+        {isOpen && <hr />}
       </div>
-      <br />
-      <span className="text-xs text-gray-600 font-semibold">
-        About Press Copyright <br /> Contact us Creators <br /> Advertise
-        Developers <br />
-        <p className="mt-3">Terms Privacy Policy & Safety</p> How VideoTube works{" "}
-        <br /> Test new features
-      </span>
-      <br />
-      <p className="text-xs text-gray-500 mt-3">© 2025 VideoTube</p>
+      {isOpen && <p className="text-xs text-gray-500 mt-3">© 2025 VideoTube</p>}
+
     </div >
   );
 }

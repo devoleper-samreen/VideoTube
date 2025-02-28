@@ -9,7 +9,6 @@ import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import ProtectedRoute from './protected/Protected'
-import Content from './components/content';
 import Profile from './components/Profile';
 import Layout from './layout/layout';
 import Feed from './components/Feed';
@@ -33,7 +32,6 @@ function App() {
           {/* Protected Route */}
           <Route element={<ProtectedRoute />}>
             <Route path='/' element={<Feed />} />
-            <Route path="/content" element={<Content />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/edit-profile" element={<ProfileUpdate />} />

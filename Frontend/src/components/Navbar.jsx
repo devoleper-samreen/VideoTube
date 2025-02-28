@@ -25,7 +25,7 @@ function Navbar({ toggleSidebar }) {
           onClick={toggleSidebar}
         />
         <Link to="/">
-          <img src={OIP} alt="" className="w-22 cursor-pointer" />
+          <img src={OIP} alt="videotube logo" className="w-22 cursor-pointer" />
         </Link>
       </div>
       <div className="flex w-[35%] items-center">

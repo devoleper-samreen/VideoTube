@@ -3,7 +3,7 @@ import { useGetMeQuery } from "../../redux/api/auth";
 import { useEffect } from "react";
 
 const ProtectedRoute = () => {
-    const { data: user, isLoading, refetch } = useGetMeQuery();
+    const { data: user, refetch } = useGetMeQuery();
     const location = useLocation();
 
     //just for testing
@@ -12,12 +12,6 @@ const ProtectedRoute = () => {
         console.log('fetching');
     }, [location.pathname, refetch]);
 
-
-    if (isLoading) {
-
-
-        return <p>Loading...</p>;
-    }
 
     return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
