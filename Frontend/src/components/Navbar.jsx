@@ -9,12 +9,16 @@ import { Link } from 'react-router-dom';
 import { useGetMeQuery } from "../../redux/api/auth";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useGetProfileQuery } from "../../redux/api/auth";
 
 
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: user, isLoading } = useGetMeQuery();
+  const { data: profile } = useGetProfileQuery()
   const navigate = useNavigate();
+
+  console.log('profile data', profile);
 
 
   return (
@@ -56,7 +60,10 @@ function Navbar({ toggleSidebar }) {
         {user ?
           (
             <Link to="/profile">
-              <FaUserCircle className="text-4xl cursor-pointer text-gray-500" />
+              {!profile?.profile?.profilePicture ?
+                (<FaUserCircle className="text-4xl cursor-pointer text-gray-500" />) :
+                (<img src={profile?.profile?.profilePicture} className="text-4xl cursor-pointer text-gray-500 bg-gray-300 h-10 w-10 rounded-full" />)
+              }
             </Link>
           ) :
           (

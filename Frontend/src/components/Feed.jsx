@@ -52,7 +52,7 @@ const Feed = () => {
 
                             {/* Right Side - Title & Channel Name */}
                             <div className="flex flex-col text-right w-full ml-3">
-                                <Typography variant="h6" component="h3" noWrap>
+                                <Typography component="h5" noWrap>
                                     {video?.title}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
