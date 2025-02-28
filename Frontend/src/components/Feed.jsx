@@ -38,7 +38,7 @@ const Feed = () => {
                             <img
                                 src={video?.profileDetails?.profilePicture}
 
-                                className="min-w-10 min-h-10 max-w-12 max-h-12 rounded-full object-cover bg-amber-300"
+                                className="w-12 h-12 rounded-full object-cover bg-amber-300"
                             />
 
                             {/* Right Side - Title & Channel Name */}
