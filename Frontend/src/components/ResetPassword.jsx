@@ -17,7 +17,7 @@ const ResetPassword = () => {
         event.preventDefault();
 
         try {
-            const res = await resetPassword({ id, token, newPassword: password }).unwrap();
+            const res = await resetPassword({ id, token, newPassword: password, confiremPassword: confirmPassword }).unwrap();
             console.log("response : ", res);
 
             toast.success(res?.message);
