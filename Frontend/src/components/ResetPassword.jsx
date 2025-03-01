@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
-// import Loader from "./Loader";
+import Loader from "./Loader";
 import { useResetPasswordMutation } from "../../redux/api/auth"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
+    const { id, token } = useParams();
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [resetPassword, { isLoading, isError }] = useResetPasswordMutation();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-
         try {
+            const res = await resetPassword({ id, token, newPassword: password }).unwrap();
+            console.log("response : ", res);
+
+            toast.success(res?.message);
+            navigate("/login");
 
         } catch (error) {
             console.error("Forgot Password Failed:", error);
+            toast.error(error.data?.message || "Password reset failed");
 
         }
 
@@ -64,7 +71,7 @@ const ResetPassword = () => {
                         disabled={!password || isError}
                         sx={{ mt: 4 }}
                     >
-                        {isLoading ? 'loading...' : "Submit"}
+                        {isLoading ? <Loader /> : "Submit"}
 
                     </Button>
                 </form>

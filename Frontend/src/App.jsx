@@ -44,7 +44,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/verify-email' element={<OTPInput />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
 
       </Routes>
     </div>

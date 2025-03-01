@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
-import Loader from "./Loader";
+import Loader from "./loader";
 import { useForgotPasswordMutation } from "../../redux/api/auth"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";

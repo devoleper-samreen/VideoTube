@@ -104,8 +104,14 @@ export const forgotPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
     try {
-        const { id, token } = req.params;
+        const { id, token } = req.params;//userid and accesstoken
         const { newPassword, confiremPassword } = req.body;
+
+        if (!token) {
+            return res.status(401).json({
+                message: "Access token missing. Please log in again."
+            });
+        }
 
         if (!newPassword || !confiremPassword) {
             return res.status(400).json({
@@ -119,6 +125,9 @@ export const resetPassword = async (req, res) => {
             });
         }
 
+        //verify token
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
         const user = await User.findById(id);
 
         if (!user) {
@@ -126,9 +135,6 @@ export const resetPassword = async (req, res) => {
                 message: "User not found"
             });
         }
-
-        //verify token
-        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
         // Hash new password
         const salt = await bcrypt.genSalt(10);
