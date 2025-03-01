@@ -14,9 +14,15 @@ import { useGetProfileQuery } from "../../redux/api/auth";
 
 function Navbar({ toggleSidebar }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: user, isLoading } = useGetMeQuery();
+  const { data: user } = useGetMeQuery();
   const { data: profile } = useGetProfileQuery()
   const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search?q=${searchQuery}`); // URL update
+    }
+  };
 
 
   return (
@@ -38,6 +44,7 @@ function Navbar({ toggleSidebar }) {
             className="outline-none w-full"
             onChange={(e) => setSearchQuery(e.target.value)}
             value={searchQuery}
+            onKeyDown={handleSearch}
           />
         </div>
       </div>

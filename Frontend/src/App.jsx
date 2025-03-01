@@ -26,6 +26,7 @@ function App() {
         {/* routes with navbar and sidebar */}
         <Route path='/' element={<Layout />} >
           <Route index element={<Feed />} />
+          <Route path='/search' element={<Feed />} />
           {/* <Route path="/search/:searchQuery" element={<Search />} /> */}
           <Route path="/playing" element={<PlayingVideo />} />
 

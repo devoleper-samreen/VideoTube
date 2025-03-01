@@ -1,20 +1,26 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardMedia, Typography, CircularProgress } from "@mui/material";
 import { useGetMixedVideosQuery } from "../../redux/api/videoApi";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Loader from "./loader"
+import { useGetVideosQuery } from "../../redux/api/searchApi"
 
 
 const Feed = () => {
-    const { data, error, isLoading, isFetching, refetch } = useGetMixedVideosQuery();
-    const [videos, setVideos] = useState([]);
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get("q");
+
+    const { data: videosData, isLoading: isLoadingVideos, refetch, error } = useGetMixedVideosQuery();
+    const { data: searchData, isLoading: isLoadingSearch } = useGetVideosQuery(query, { skip: !query });
+
+    //const [videos, setVideos] = useState([]);
+
+    const videos = query ? searchData?.videos : videosData?.videos;
+    const isLoading = query ? isLoadingSearch : isLoadingVideos;
 
     useEffect(() => {
-        if (data) {
-            setVideos(data.videos);
-        }
         refetch();
-    }, [data]);
+    }, [videosData, searchData]);
 
 
     if (isLoading) {

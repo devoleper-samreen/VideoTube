@@ -3,6 +3,7 @@ import { Video } from "../models/video.js";
 export const searchVideos = async (req, res) => {
     try {
         const query = req.query.q;
+        console.log("Query", query);
 
         // Case-insensitive search
         const videos = await Video.find({
@@ -22,7 +23,10 @@ export const searchVideos = async (req, res) => {
             ],
         });
 
-        return res.status(200).json(videos);
+        return res.status(200).json({
+            message: "vides fetched successfully!",
+            videos
+        });
 
     } catch (error) {
         console.error("Error in search: ", error);
