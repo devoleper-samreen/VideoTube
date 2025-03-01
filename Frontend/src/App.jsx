@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Search from './components/Search';
+// import Search from './components/Search';
 import PlayingVideo from './components/PlayingVideo';
 import './App.css';
 import Signup from './components/Signup';
@@ -26,7 +26,7 @@ function App() {
         {/* routes with navbar and sidebar */}
         <Route path='/' element={<Layout />} >
           <Route index element={<Feed />} />
-          <Route path="/search/:searchQuery" element={<Search />} />
+          {/* <Route path="/search/:searchQuery" element={<Search />} /> */}
           <Route path="/playing" element={<PlayingVideo />} />
 
           {/* Protected Route */}

@@ -18,9 +18,6 @@ function Navbar({ toggleSidebar }) {
   const { data: profile } = useGetProfileQuery()
   const navigate = useNavigate();
 
-  // console.log('profile data', profile);
-  // const profile = ''
-
 
   return (
     <div className="flex justify-between max-w-[1250px] w-full mx-auto bg-white px-10 py-6 h-14 items-center shadow-md fixed">
@@ -44,6 +41,7 @@ function Navbar({ toggleSidebar }) {
           />
         </div>
       </div>
+
       <div className="flex items-center space-x-4">
         {/* Notification Icon */}
         <div className="relative cursor-pointer">
