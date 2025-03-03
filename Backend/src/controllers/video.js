@@ -1,5 +1,6 @@
 import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import { Video } from "../models/video.js"
+import { Profile } from "../models/profile.js"
 
 export const publishVideo = async (req, res) => {
     try {
@@ -112,7 +113,8 @@ export const getVideoById = async (req, res) => {
             })
         }
 
-        const video = await Video.findById({ _id: videoId })
+        const video = await Video.findById({ _id: videoId }).populate("owner", "name");
+        const ownerProfilePicture = await Profile.findOne({ userDetail: video.owner._id }).select("profilePicture");
 
         if (!video) {
             return res.status(404).json({
@@ -122,7 +124,8 @@ export const getVideoById = async (req, res) => {
 
         return res.status(200).json({
             message: "Video fetched successfully",
-            video
+            video,
+            ownerProfilePicture
         })
 
     } catch (error) {
