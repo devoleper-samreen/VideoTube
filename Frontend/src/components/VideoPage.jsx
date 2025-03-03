@@ -48,7 +48,7 @@ const VideoPage = () => {
 
             {/* Comment Section */}
             <div className="mt-8">
-                <Typography variant="h6" className="mb-4 font-semibold">Comments</Typography>
+                <Typography variant="h6" className="mb-10 font-semibold" sx={{ marginBottom: 4, marginTop: 4 }} >Comments</Typography>
                 {/* Comment Input */}
                 <div className="flex items-start space-x-3">
                     <Avatar alt="User" />
