@@ -2,11 +2,31 @@ import { useParams } from "react-router-dom";
 import { useGetVideoByIdQuery } from "../../redux/api/videoApi";
 import { CircularProgress, Typography, Avatar, Button, TextField } from "@mui/material";
 import { ThumbsUp, ThumbsDown } from "lucide-react"; // using lucide-react icons
+import { useAddLikeMutation, useDeleteLikeMutation, useGetLikesCountByVideoQuery } from "../../redux/api/likeApi"
+import { useState } from "react";
 
 const VideoPage = () => {
     const { videoId } = useParams();
     const { data, error, isLoading } = useGetVideoByIdQuery(videoId);
+
+    const { data: likesData, refetch } = useGetLikesCountByVideoQuery(videoId);
+
+    const [addLike] = useAddLikeMutation();
+    const [deleteLike] = useDeleteLikeMutation();
+
+    const [liked, setLiked] = useState(false);
     console.log("data:", data);
+
+    const handleLike = async () => {
+        if (!liked) {
+            await addLike(videoId);
+            setLiked(true);
+        } else {
+            await deleteLike(videoId);
+            setLiked(false);
+        }
+        refetch(); // refresh like count
+    };
 
     if (isLoading) return <CircularProgress className="flex justify-center mt-4" />;
     if (error) return <div className="text-center text-red-500">Failed to load video.</div>;
@@ -37,12 +57,14 @@ const VideoPage = () => {
 
                 {/* Like/Dislike */}
                 <div className="flex items-center space-x-4 gap-4">
-                    <Button variant="outlined" startIcon={<ThumbsUp size={20} />}>
-                        Like
+                    <Button variant="outlined" startIcon={<ThumbsUp size={20} />}
+                        onClick={handleLike}
+                    >
+                        {likesData?.likesCount || 0} Like
                     </Button>
-                    <Button variant="outlined" startIcon={<ThumbsDown size={20} />}>
+                    {/* <Button variant="outlined" startIcon={<ThumbsDown size={20} />}>
                         Dislike
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
 
@@ -62,7 +84,7 @@ const VideoPage = () => {
                 </div>
 
                 {/* Example Comments */}
-                <div className="mt-6 space-y-4">
+                {/* <div className="mt-6 space-y-4">
                     <div className="flex items-start space-x-3">
                         <Avatar alt="User" />
                         <div>
@@ -77,7 +99,7 @@ const VideoPage = () => {
                             <Typography variant="body2">Thanks for sharing!</Typography>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

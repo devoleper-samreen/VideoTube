@@ -2,7 +2,16 @@ import { Like } from '../models/like.js';
 
 export const addLike = async (req, res) => {
     try {
-        const { userId, videoId } = req.body;
+        const { videoId } = req.params;
+        const userId = req.user._id
+
+        const alreadyLiked = await Like.findOne({ onVideo: videoId, likedBy: userId });
+
+        if (alreadyLiked) {
+            // Remove the like (unlike)
+            await Like.findByIdAndDelete(alreadyLiked._id);
+            return res.status(200).json({ message: "Like removed" });
+        }
         const newLike = new Like({
             onVideo: videoId,
             likedBy: userId
@@ -24,7 +33,8 @@ export const addLike = async (req, res) => {
 
 export const deleteLike = async (req, res) => {
     try {
-        const { userId, videoId } = req.body;
+        const { videoId } = req.params;
+        const userId = req.user._id
 
         const like = await Like.findOneAndDelete({
             likedBy: userId,
@@ -41,6 +51,8 @@ export const deleteLike = async (req, res) => {
         });
 
     } catch (error) {
+        console.log(error);
+
         return res.status(500).json({
             message: 'Error removing like',
             error
@@ -51,7 +63,9 @@ export const deleteLike = async (req, res) => {
 export const getLikesByVideo = async (req, res) => {
     try {
         const { videoId } = req.params;
-        const likes = await Like.find({ videoId });
+        // const likes = await Like.find({ videoId });
+        const likes = await Like.find({ onVideo: videoId });
+
 
         return res.status(200).json({
             message: "get success",

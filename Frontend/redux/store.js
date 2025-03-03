@@ -4,6 +4,7 @@ import { videoApi } from "./api/videoApi"
 import { uploadApi } from "./api/upload"
 import { profileApi } from "./api/profileApi";
 import { searchApi } from "./api/searchApi";
+import { likeApi } from "./api/likeApi";
 
 export const store = configureStore({
     reducer: {
@@ -11,8 +12,9 @@ export const store = configureStore({
         [videoApi.reducerPath]: videoApi.reducer,
         [uploadApi.reducerPath]: uploadApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
-        [searchApi.reducerPath]: searchApi.reducer
+        [searchApi.reducerPath]: searchApi.reducer,
+        [likeApi.reducerPath]: likeApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApi.middleware, videoApi.middleware, uploadApi.middleware, profileApi.middleware, searchApi.middleware),
+        getDefaultMiddleware().concat(authApi.middleware, videoApi.middleware, uploadApi.middleware, profileApi.middleware, searchApi.middleware, likeApi.middleware),
 });
