@@ -4,6 +4,7 @@ import { CircularProgress, Typography, Avatar, Button, TextField } from "@mui/ma
 import { ThumbsUp, ThumbsDown } from "lucide-react"; // using lucide-react icons
 import { useAddLikeMutation, useDeleteLikeMutation, useGetLikesCountByVideoQuery } from "../../redux/api/likeApi"
 import { useState } from "react";
+import CommentsSection from "./Comment"
 
 const VideoPage = () => {
     const { videoId } = useParams();
@@ -69,38 +70,7 @@ const VideoPage = () => {
             </div>
 
             {/* Comment Section */}
-            <div className="mt-8">
-                <Typography variant="h6" className="mb-10 font-semibold" sx={{ marginBottom: 4, marginTop: 4 }} >Comments</Typography>
-                {/* Comment Input */}
-                <div className="flex items-start space-x-3">
-                    <Avatar alt="User" />
-                    <TextField
-                        placeholder="Add a comment..."
-                        multiline
-                        fullWidth
-                        rows={2}
-                        variant="outlined"
-                    />
-                </div>
-
-                {/* Example Comments */}
-                {/* <div className="mt-6 space-y-4">
-                    <div className="flex items-start space-x-3">
-                        <Avatar alt="User" />
-                        <div>
-                            <Typography variant="subtitle2">User1</Typography>
-                            <Typography variant="body2">This is an awesome video!</Typography>
-                        </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                        <Avatar alt="User" />
-                        <div>
-                            <Typography variant="subtitle2">User2</Typography>
-                            <Typography variant="body2">Thanks for sharing!</Typography>
-                        </div>
-                    </div>
-                </div> */}
-            </div>
+            <CommentsSection videoId={videoId} />
         </div>
     );
 };

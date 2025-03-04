@@ -3,11 +3,15 @@ import { Comment } from "../models/comment.js";
 // Create a new comment
 export const createComment = async (req, res) => {
     try {
+
         const { videoId } = req.params;
         const userId = req.user._id
         const { content } = req.body;
 
+
         if (!userId || !videoId || !content) {
+            console.log("inside all fields");
+
             return res.status(400).json({
                 message: "All fields are reqiured"
             })
@@ -18,7 +22,10 @@ export const createComment = async (req, res) => {
             onVideo: videoId,
             commentBy: userId
         });
+
         if (!newComment) {
+            console.log("inside Failed to create comment");
+
             return res.status(400).json({
                 message: "Failed to create comment"
             });
