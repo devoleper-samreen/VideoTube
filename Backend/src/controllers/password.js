@@ -28,6 +28,7 @@ export const changePassword = async (req, res) => {
         const isMatch = await bcrypt.compare(oldPassword, user.password);
 
         if (!isMatch) {
+
             return res.status(400).json({
                 message: "Old password is incorrect"
             });
@@ -41,7 +42,7 @@ export const changePassword = async (req, res) => {
         user.password = hashedPassword;
         await user.save();
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Password updated successfully"
         });
 

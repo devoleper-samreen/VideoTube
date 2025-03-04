@@ -15,6 +15,7 @@ import Feed from './components/Feed';
 import Upload from './components/Upload';
 import ProfileUpdate from "./components/ProfileUpdate";
 import VideoPage from './components/VideoPage';
+import ChangePassword from "./components/ChangePassword"
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             {/* <Route path='/' element={<Feed />} /> */}
             <Route path="/profile" element={<Profile />} />
+            <Route path='/change-password' element={<ChangePassword />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/edit-profile" element={<ProfileUpdate />} />
             <Route path="/video/:videoId" element={<VideoPage />} />

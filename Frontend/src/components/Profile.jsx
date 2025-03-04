@@ -11,12 +11,11 @@ import { useEffect } from "react";
 const Profile = () => {
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useGetProfileQuery();
-    const [logout, { isError }] = useLogoutMutation();
+    const [logout] = useLogoutMutation();
 
     useEffect(() => {
         refetch();
     }, [data]);
-
 
     if (isLoading) {
         return (
@@ -49,7 +48,6 @@ const Profile = () => {
 
             window.location.href = "/";
             toast.success('Logged out successfully');
-            // navigate('/');
 
         } catch (error) {
             console.log(error);
@@ -99,6 +97,16 @@ const Profile = () => {
                             <LogoutIcon sx={{ ml: 1 }} />
                         </Button>
                     </Link>
+                    <Link to='/change-password'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ textTransform: 'none', float: 'right' }}
+                        >
+                            change password
+                        </Button>
+                    </Link>
+
                 </Stack>
 
                 <h2 className="text-xl font-bold mb-4">Name</h2>

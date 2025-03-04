@@ -30,22 +30,6 @@ export const registration = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        // //create user
-        // const newUser = await User.create({
-        //     name,
-        //     email,
-        //     password: hashedPassword
-        // })
-
-        // const savedUser = await newUser.save();
-
-        // if (!savedUser) {
-        //     return res.status(500).json({
-        //         status: "failed",
-        //         message: "Error in creating user"
-        //     });
-        // }
-
         //create user
         const newUser = await User.create({
             name,
@@ -64,16 +48,7 @@ export const registration = async (req, res) => {
             });
         }
 
-        const savedUser = await newUser.save();
-
-        if (!savedUser) {
-            return res.status(500).json({
-                status: "failed",
-                message: "Error in creating user"
-            });
-        }
-
-        res.status(201).json({
+        return res.status(201).json({
             status: "success",
             message: "User created successfully",
             user: newUser
