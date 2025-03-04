@@ -5,6 +5,8 @@ import { ThumbsUp, ThumbsDown } from "lucide-react"; // using lucide-react icons
 import { useAddLikeMutation, useDeleteLikeMutation, useGetLikesCountByVideoQuery } from "../../redux/api/likeApi"
 import { useState } from "react";
 import CommentsSection from "./Comment"
+import { useIncreaseViewCountMutation } from "../../redux/api/videoApi";
+
 
 const VideoPage = () => {
     const { videoId } = useParams();
@@ -17,6 +19,20 @@ const VideoPage = () => {
 
     const [liked, setLiked] = useState(false);
     console.log("data:", data);
+
+    const [increaseViewCount] = useIncreaseViewCountMutation();
+
+    const handleViewCount = async () => {
+
+        try {
+            const res = await increaseViewCount(videoId);
+            console.log(res);
+
+            console.log("Updated Views:", res.data.views);
+        } catch (error) {
+            console.error("Failed to update views", error);
+        }
+    };
 
     const handleLike = async () => {
         if (!liked) {
@@ -35,8 +51,10 @@ const VideoPage = () => {
     return (
         <div className="p-4 max-w-4xl mx-auto">
             {/* Video Player */}
-            <video controls className="w-full h-[400px] shadow-lg bg-gray-300 rounded-2xl mb-6">
-                <source src={data?.video.video} type="video/mp4" />
+            <video controls className="w-full h-[400px] shadow-lg bg-gray-300 rounded-2xl mb-6" onPlay={handleViewCount}>
+                <source src={data?.video.video} type="video/mp4"
+
+                />
                 Your browser does not support the video tag.
             </video>
 
@@ -58,6 +76,10 @@ const VideoPage = () => {
 
                 {/* Like/Dislike */}
                 <div className="flex items-center space-x-4 gap-4">
+                    <div className="flex items-center text-gray-600 text-sm">
+                        👁️ {data?.video.views || 0} Views
+                    </div>
+
                     <Button variant="outlined" startIcon={<ThumbsUp size={20} />}
                         onClick={handleLike}
                     >

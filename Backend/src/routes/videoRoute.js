@@ -8,6 +8,7 @@ import {
 } from '../controllers/video.js';
 import { verifyToken } from '../middelwares/verifyJWT.js';
 import { upload } from '../middelwares/multur.js';
+import { increaseViewCount } from "../controllers/views.js"
 
 const router = express.Router()
 router.use(verifyToken)
@@ -34,6 +35,8 @@ router.patch('/:videoId', upload.fields([
     },
 
 ]), updateVideo)
+
+router.post('/views/:videoId', increaseViewCount)
 
 
 

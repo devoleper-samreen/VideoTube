@@ -15,7 +15,7 @@ export const increaseViewCount = async (req, res) => {
         }
 
         // Views count badhao aur user ko list me add karo
-        await Video.findByIdAndUpdate(
+        const updatedVideo = await Video.findByIdAndUpdate(
             videoId,
             {
                 $inc: {
@@ -24,10 +24,14 @@ export const increaseViewCount = async (req, res) => {
                 $push: {
                     viewedBy: userId
                 }
-            });
+            },
+            { new: true }
+        );
 
         return res.status(200).json({
-            message: "View count updated"
+            message: "View count updated",
+            views: updatedVideo.views
+
         });
 
     } catch (error) {
