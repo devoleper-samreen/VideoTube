@@ -4,7 +4,8 @@ import {
     getVideoById,
     getAllVideos,
     deleteVideo,
-    updateVideo
+    updateVideo,
+    getWatchedVideos
 } from '../controllers/video.js';
 import { verifyToken } from '../middelwares/verifyJWT.js';
 import { upload } from '../middelwares/multur.js';
@@ -25,8 +26,8 @@ router.post('/', upload.fields([
 
 ]), publishVideo)
 
-router.get('/:videoId', getVideoById)
-router.get('/get-all/:userId', getAllVideos)
+
+router.get('/your/get-all', getAllVideos)
 router.delete('/:videoId', deleteVideo)
 router.patch('/:videoId', upload.fields([
     {
@@ -37,6 +38,8 @@ router.patch('/:videoId', upload.fields([
 ]), updateVideo)
 
 router.post('/views/:videoId', increaseViewCount)
+router.get('/watched-videos', getWatchedVideos)
+router.get('/:videoId', getVideoById)
 
 
 

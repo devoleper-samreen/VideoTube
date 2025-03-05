@@ -31,12 +31,14 @@ function Sidebar({ isOpen }) {
       id: 4,
       name: "Your Videos",
       icon: <BiVideo />,
+      path: '/your-videos'
     },
 
     {
       id: 6,
-      name: "Liked videos",
+      name: "Watched videos",
       icon: <AiOutlineLike />,
+      path: "/watched-videos"
     },
 
   ];

@@ -12,6 +12,12 @@ export const videoApi = createApi({
         getVideoById: builder.query({
             query: (videoId) => `video/${videoId}`,
         }),
+        getUserVideos: builder.query({
+            query: () => `video/your/get-all`,
+        }),
+        getWatchedVideos: builder.query({
+            query: () => "video/watched-videos",
+        }),
         increaseViewCount: builder.mutation({
             query: (videoId) => ({
                 url: `/video/views/${videoId}`,
@@ -22,4 +28,4 @@ export const videoApi = createApi({
     }),
 });
 
-export const { useGetMixedVideosQuery, useGetVideoByIdQuery, useIncreaseViewCountMutation } = videoApi;
+export const { useGetMixedVideosQuery, useGetVideoByIdQuery, useIncreaseViewCountMutation, useGetUserVideosQuery, useGetWatchedVideosQuery } = videoApi;

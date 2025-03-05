@@ -71,7 +71,9 @@ export const publishVideo = async (req, res) => {
 export const getAllVideos = async (req, res) => {
 
     try {
-        const { userId } = req.params
+        const userId = req.user._id
+        console.log("de raha hain", userId);
+
 
         if (!userId) {
             return res.status(400).json({
@@ -81,10 +83,10 @@ export const getAllVideos = async (req, res) => {
 
         const AllVideos = await Video.find({ owner: userId })
 
-        if (!AllVideos) {
+        if (AllVideos.length === 0) {
             return res.status(404).json({
-                message: "No videos found"
-            })
+                message: "No videos found for this user",
+            });
         }
 
         return res.status(200).json({
@@ -241,3 +243,65 @@ export const updateVideo = async (req, res) => {
 
     }
 }
+
+export const getWatchedVideos = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const watchedVideos = await Video.aggregate([
+            {
+                $match: {
+                    viewedBy: userId
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "owner",
+                    foreignField: "_id",
+                    as: "ownerDetails"
+                }
+            },
+            {
+                $unwind: "$ownerDetails"
+            },
+            {
+                $lookup: {
+                    from: "profiles",
+                    localField: "ownerDetails._id",
+                    foreignField: "userDetail",
+                    as: "profileDetails"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$profileDetails",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $addFields: {
+                    "ownerDetails.profilePicture": "$profileDetails.profilePicture"
+                }
+            }
+        ]);
+
+        if (watchedVideos.length === 0) {
+            return res.status(404).json({
+                message: "No watched videos found"
+            });
+        }
+
+        return res.status(200).json({
+            message: "Watched videos fetched successfully",
+            watchedVideos
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+};
+
