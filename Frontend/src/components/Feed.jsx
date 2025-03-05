@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardMedia, Typography, CircularProgress } from "@mui/material";
+import { useEffect } from "react";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useGetMixedVideosQuery } from "../../redux/api/videoApi";
 import { Link, useSearchParams } from "react-router-dom";
-import Loader from "./loader"
 import { useGetVideosQuery } from "../../redux/api/searchApi"
+import { Skeleton } from "@mui/material";
+
 
 
 const Feed = () => {
@@ -23,12 +24,23 @@ const Feed = () => {
 
     if (isLoading) {
         return (
-            <div className="h-screen w-screen flex justify-center items-center">
-                <Loader />
+            <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 cursor-pointer">
+                {Array.from(new Array(6)).map((_, index) => (
+                    <Card key={index} className="rounded-lg overflow-hidden shadow-lg min-h-[260px]">
+                        <Skeleton variant="rectangular" height={200} />
+                        <CardContent className="flex items-center justify-between">
+                            <Skeleton variant="circular" width={48} height={48} />
+                            <div className="flex flex-col text-right w-full ml-3">
+                                <Skeleton width="80%" height={20} />
+                                <Skeleton width="60%" height={15} />
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
             </div>
-        )
-
+        );
     }
+
     if (error) return <div className="flex items-center justify-center h-screen text-red-500">Failed to load videos.</div>;
 
     return (

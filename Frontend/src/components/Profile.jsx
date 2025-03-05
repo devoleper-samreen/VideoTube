@@ -8,35 +8,49 @@ import { useEffect } from "react";
 const Profile = () => {
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useGetProfileQuery();
+    const { profile } = data;
 
     useEffect(() => {
         refetch();
     }, [data]);
 
+
     if (isLoading) {
         return (
-            <div className="flex flex-col justify-center items-center">
-                <Skeleton
-                    variant="rectangular"
-                    width="80%"
-                    height={300}
-                    sx={{ m: 2, borderRadius: 2 }} />
-                <Skeleton
-                    variant="rectangular"
-                    width="80%"
-                    height={300}
-                    sx={{ m: 2, borderRadius: 2 }}
-                />;
+            <div className="w-[100%] p-4 mt-2 shadow-md">
+                {/* Skeleton for Cover Image */}
+                <Skeleton variant="rectangular" width="100%" height={208} className="rounded-lg" />
+
+                {/* Skeleton for Profile Picture */}
+                <div className="relative flex justify-center">
+                    <Skeleton
+                        variant="circular"
+                        width={128}
+                        height={128}
+                        className="absolute -top-16"
+                    />
+                </div>
+
+                {/* Skeleton for Buttons */}
+                <div className="mt-20 mb-6 flex justify-end gap-4">
+                    <Skeleton variant="rectangular" width={120} height={40} />
+                    <Skeleton variant="rectangular" width={150} height={40} />
+                </div>
+
+                {/* Skeleton for Name */}
+                <Skeleton width="30%" height={30} className="mb-4" />
+                <Skeleton width="50%" height={25} className="mb-10" />
+
+                {/* Skeleton for Email */}
+                <Skeleton width="40%" height={30} className="mb-4" />
+                <Skeleton width="60%" height={25} className="mb-10" />
+
+                {/* Skeleton for Description */}
+                <Skeleton width="35%" height={30} className="mb-4" />
+                <Skeleton width="80%" height={60} className="mb-10" />
             </div>
-
-        )
+        );
     }
-
-    if (!data || !data.profile) {
-        return <p className="text-center text-red-500">Profile not found!</p>;
-    }
-
-    const { profile } = data;
 
     return (
         <div className="w-[100%] p-4 mt-2 shadow-md">
@@ -45,7 +59,7 @@ const Profile = () => {
                 <img
                     src={profile?.coverImage || ''}
                     alt="Cover"
-                    className="w-full h-52 object-cover rounded-lg bg-amber-600"
+                    className="w-full h-52 object-cover rounded-lg bg-gray-100"
                 />
                 {/* User Picture */}
                 <img
