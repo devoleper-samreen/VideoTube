@@ -1,58 +1,32 @@
 import PropTypes from 'prop-types';
 import { GoHome } from "react-icons/go";
-import { MdOutlineSubscriptions, MdHistory } from "react-icons/md";
-import { PiUserSquareThin } from "react-icons/pi";
-import { IoGameControllerOutline } from "react-icons/io5";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaChevronRight } from "react-icons/fa6";
-import { FaYoutube } from "react-icons/fa";
-import { SiYoutubestudio } from "react-icons/si";
-import { SiYoutubekids } from "react-icons/si";
-import { SiYoutubemusic } from "react-icons/si";
-import { SiTrendmicro } from "react-icons/si";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { PiFilmSlateLight } from "react-icons/pi";
-import { CgMediaLive } from "react-icons/cg";
-import { FaRegNewspaper } from "react-icons/fa";
-import { TfiCup } from "react-icons/tfi";
-import { PiLightbulbLight } from "react-icons/pi";
-import { SiStylelint } from "react-icons/si";
-import { MdPodcasts } from "react-icons/md";
 import { BiVideo } from "react-icons/bi";
+import { MdOutlineLogout } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
+import { Link } from 'react-router-dom';
+import { useLogoutMutation } from "../../redux/api/auth"
+import { toast } from 'react-hot-toast';
 
 
 function Sidebar({ isOpen }) {
-  const sidebarItems = [
-    {
-      id: 1,
-      name: "Home",
-      icon: <GoHome />,
-      path: "/",
-    },
+  const [logout] = useLogoutMutation();
 
-    {
-      id: 3,
-      name: "Subscriptions",
-      icon: <MdOutlineSubscriptions />,
-      path: "/subscriptions",
-    },
-  ];
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success('Logged out successfully');
+      window.location.href = "/";
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const sidebarItems2 = [
-    {
-      id: 1,
-      name: "Your Channel",
-      icon: <PiUserSquareThin />,
-    },
-    {
-      id: 2,
-      name: "History",
-      icon: <MdHistory />,
-    },
-    {
-      id: 3,
-      name: "Playlists",
-      icon: <MdOutlineSubscriptions />,
-    },
+
     {
       id: 4,
       name: "Your Videos",
@@ -64,170 +38,77 @@ function Sidebar({ isOpen }) {
       name: "Liked videos",
       icon: <AiOutlineLike />,
     },
+
   ];
-  const sidebarItems3 = [
-    {
-      id: 1,
-      name: "Trending",
-      icon: <SiTrendmicro />,
-    },
-    {
-      id: 2,
-      name: "Shopping",
-      icon: <HiOutlineShoppingBag />,
-    },
-    {
-      id: 3,
-      name: "Music",
-      icon: <SiYoutubemusic />,
-    },
-    {
-      id: 4,
-      name: "Films",
-      icon: <PiFilmSlateLight />,
-    },
-    {
-      id: 5,
-      name: "Live",
-      icon: <CgMediaLive />,
-    },
-    {
-      id: 6,
-      name: "Gaming",
-      icon: <IoGameControllerOutline />,
-    },
-    {
-      id: 7,
-      name: "News",
-      icon: <FaRegNewspaper />,
-    },
-    {
-      id: 8,
-      name: "Sport",
-      icon: <TfiCup />,
-    },
-    {
-      id: 9,
-      name: "Courses",
-      icon: <SiStylelint />,
-    },
-    {
-      id: 10,
-      name: "Fashion & beauty",
-      icon: <PiLightbulbLight />,
-    },
-    {
-      id: 11,
-      name: "Padcasts",
-      icon: <MdPodcasts />,
-    },
-  ];
-  const sidebarItems4 = [
-    {
-      id: 1,
-      name: "Videotube Premium",
-      icon: <FaYoutube />,
-    },
-    {
-      id: 2,
-      name: "Videotube Studio",
-      icon: <SiYoutubestudio />,
-    },
-    {
-      id: 3,
-      name: "Videotube Music",
-      icon: <SiYoutubemusic />,
-    },
-    {
-      id: 4,
-      name: "Videotube Kids",
-      icon: <SiYoutubekids />,
-    },
-  ];
+
+
   return (
     <div
-      className={`h-[calc(100vh-56px)] border-r-2 p-5 border-r-gray-200 bg-white transition-all duration-300 overflow-y-auto shadow-md
-      ${isOpen ? 'w-50' : 'w-[70px]'}`}
+      className={`h-[calc(100vh-56px)] border-r-2  border-r-gray-200 bg-white transition-all duration-300 overflow-y-auto shadow-md
+      ${isOpen ? 'w-50' : 'w-0'} ${isOpen ? 'p-5' : 'p-0'}`}
       id='sidebar'
     >
       {/* Home */}
-      <div className="space-y-3 items-center">
-        {sidebarItems.map((item) => {
-          return (
-            <div
-              key={item.id}
-              className={`flex items-center space-x-6 duration-300 py-2 px-2 rounded-2xl  ${isOpen && "hover:bg-gray-300"}`}
-            >
-              <div className="text-xl cursor-pointer">{item.icon}</div>
-              <span className="cursor-pointer">{item.name}</span>
-
-            </div>
-
-          );
-        })}
+      <div className="space-y-4 items-center">
+        <Link to='/'>
+          <div
+            className={`flex items-center space-x-6 duration-300 py-3 px-2 mt-3 rounded-2xl  ${isOpen && "hover:bg-gray-300"}`}
+          >
+            <div className="text-xl cursor-pointer"><GoHome /></div>
+            <span className="cursor-pointer">Home</span>
+          </div>
+        </Link>
       </div>
       <br />
       <hr />
       {/* You */}
       <div className="mt-4 space-y-3 items-center">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 mb-6">
           <h1>You</h1>
           <FaChevronRight />
         </div>
         {sidebarItems2.map((item) => {
           return (
-            <div
-              key={item.id}
+            <Link
+              key={item.id} to={item.path}
               className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
             >
               <div className="text-xl cursor-pointer">{item.icon}</div>
               <span className="cursor-pointer">{item.name}</span>
-            </div>
+            </Link>
           );
         })}
       </div>
       <br />
       <hr />
-      {/* Explore */}
+
+      {/* dashboard & logout */}
       <div className="mt-4 space-y-3 items-center">
         <div className="items-center space-x-2">
-          {isOpen && <h1 className=" font-semibold">Explore</h1>}
+          {isOpen && <h1 className=" font-semibold mb-6">Go For</h1>}
         </div>
-        {sidebarItems3.map((item) => {
-          return (
-            <div
-              key={item.id}
-              className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
-            >
-              <div className="text-xl cursor-pointer">{item.icon}</div>
-              <span className="cursor-pointer">{item.name}</span>
-            </div>
-          );
-        })}
+
+        <Link
+          to='/dashboard'
+          className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
+        >
+          <div className="text-xl cursor-pointer"><RxDashboard /></div>
+          <span className="cursor-pointer">Dashboard</span>
+        </Link>
+
+        <Link
+          onClick={handleLogout}
+          className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
+        >
+          <div className="text-xl cursor-pointer"><MdOutlineLogout /></div>
+          <span className="cursor-pointer">Logout</span>
+        </Link>
+
       </div>
       <br />
       <hr />
-      {/* More section */}
-      <div className="mt-4 space-y-3 items-center">
-        <div className="items-center space-x-2">
-          {isOpen && <h1 className="font-semibold">More From Videotube</h1>}
-        </div>
-        {sidebarItems4.map((item) => {
-          return (
-            <div
-              key={item.id}
-              className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
-            >
-              <div className="text-xl cursor-pointer text-red-500">
-                {item.icon}
-              </div>
-              <span className="cursor-pointer">{item.name}</span>
-            </div>
-          );
-        })}
-        {isOpen && <hr />}
-      </div>
-      {isOpen && <p className="text-xs text-gray-500 mt-3">© 2025 VideoTube</p>}
+
+      {isOpen && <p className="text-xs text-gray-500 mt-6 text-center">© 2025 VideoTube</p>}
 
     </div >
   );

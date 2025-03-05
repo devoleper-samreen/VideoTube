@@ -2,16 +2,12 @@ import { useGetProfileQuery } from "../../redux/api/auth";
 import { Skeleton, Stack } from "@mui/material";
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { useLogoutMutation } from "../../redux/api/auth"
-import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Profile = () => {
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useGetProfileQuery();
-    const [logout] = useLogoutMutation();
 
     useEffect(() => {
         refetch();
@@ -41,18 +37,6 @@ const Profile = () => {
     }
 
     const { profile } = data;
-
-    const handleLogout = async () => {
-        try {
-            await logout();
-
-            window.location.href = "/";
-            toast.success('Logged out successfully');
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     return (
         <div className="w-[100%] p-4 mt-2 shadow-md">
@@ -85,18 +69,6 @@ const Profile = () => {
 
                         </Button>
                     </Link>
-
-                    <Link>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ textTransform: 'none', float: 'right' }}
-                            onClick={handleLogout}
-                        >
-                            logout
-                            <LogoutIcon sx={{ ml: 1 }} />
-                        </Button>
-                    </Link>
                     <Link to='/change-password'>
                         <Button
                             variant="contained"
@@ -106,7 +78,6 @@ const Profile = () => {
                             change password
                         </Button>
                     </Link>
-
                 </Stack>
 
                 <h2 className="text-xl font-bold mb-4">Name</h2>

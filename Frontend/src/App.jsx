@@ -16,6 +16,7 @@ import Upload from './components/Upload';
 import ProfileUpdate from "./components/ProfileUpdate";
 import VideoPage from './components/VideoPage';
 import ChangePassword from "./components/ChangePassword"
+import Dashboard from "./components/Dashboard"
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             {/* <Route path='/' element={<Feed />} /> */}
             <Route path="/profile" element={<Profile />} />
             <Route path='/change-password' element={<ChangePassword />} />
+            <Route path='/dashboard' element={<Dashboard />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/edit-profile" element={<ProfileUpdate />} />
             <Route path="/video/:videoId" element={<VideoPage />} />
