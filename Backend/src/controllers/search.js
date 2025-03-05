@@ -5,26 +5,53 @@ export const searchVideos = async (req, res) => {
         const query = req.query.q;
         console.log("Query", query);
 
-        // Case-insensitive search
-        const videos = await Video.find({
-            $or: [
-                {
-                    title: {
-                        $regex: query,
-                        $options: "i"
-                    }
-                },
-                {
-                    description: {
-                        $regex: query,
-                        $options: "i"
-                    }
-                },
-            ],
-        });
+        const videos = await Video.aggregate([
+            // Owner ka data lao
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "owner",
+                    foreignField: "_id",
+                    as: "ownerDetails"
+                }
+            },
+            {
+                $unwind: "$ownerDetails"
+            },
+            // Profile picture bhi lao
+            {
+                $lookup: {
+                    from: "profiles",
+                    localField: "ownerDetails._id",
+                    foreignField: "userDetail",
+                    as: "profileDetails"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$profileDetails",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $addFields: {
+                    "ownerDetails.profilePicture": "$profileDetails.profilePicture"
+                }
+            },
+            // Search apply karo
+            {
+                $match: {
+                    $or: [
+                        { title: { $regex: query, $options: "i" } },
+                        { description: { $regex: query, $options: "i" } },
+                        { "ownerDetails.name": { $regex: query, $options: "i" } }
+                    ]
+                }
+            }
+        ]);
 
         return res.status(200).json({
-            message: "vides fetched successfully!",
+            message: "Videos fetched successfully!",
             videos
         });
 

@@ -5,8 +5,6 @@ import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 const YourVideos = () => {
     const { data, isLoading, error } = useGetWatchedVideosQuery();
-    console.log("user watched data", data);
-
 
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error fetching videos: {error.message}</p>;

@@ -16,7 +16,6 @@ const customBaseQuery = async (args, api, extraOptions) => {
             method: "POST",
         }, api, extraOptions);
 
-        // console.log("refreshed result: ", refreshResult);
 
         // Agar 401
         if (refreshResult?.error?.status == 401) {
@@ -25,7 +24,6 @@ const customBaseQuery = async (args, api, extraOptions) => {
 
         // Agar naya access token mila
         if (refreshResult?.data?.data?.accessToken) {
-            console.log("New Access Token:", refreshResult.data.data.accessToken);
 
             // **Original Request Retry karein with New Token**
             result = await baseQuery(args, api, extraOptions);

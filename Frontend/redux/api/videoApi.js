@@ -14,9 +14,11 @@ export const videoApi = createApi({
         }),
         getUserVideos: builder.query({
             query: () => `video/your/get-all`,
+            keepUnusedDataFor: 600
         }),
         getWatchedVideos: builder.query({
             query: () => "video/watched-videos",
+            keepUnusedDataFor: 600
         }),
         increaseViewCount: builder.mutation({
             query: (videoId) => ({

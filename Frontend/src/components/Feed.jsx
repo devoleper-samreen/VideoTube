@@ -13,8 +13,6 @@ const Feed = () => {
     const { data: videosData, isLoading: isLoadingVideos, refetch, error } = useGetMixedVideosQuery();
     const { data: searchData, isLoading: isLoadingSearch } = useGetVideosQuery(query, { skip: !query });
 
-    //const [videos, setVideos] = useState([]);
-
     const videos = query ? searchData?.videos : videosData?.videos;
     const isLoading = query ? isLoadingSearch : isLoadingVideos;
 

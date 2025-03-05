@@ -76,7 +76,6 @@ export const getMixedVideos = async (req, res) => {
 };
 
 
-
 export const getRandomVideos = async (req, res) => {
     try {
         const videos = await Video.aggregate([
