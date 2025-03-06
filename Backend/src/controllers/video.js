@@ -4,14 +4,9 @@ import { Profile } from "../models/profile.js"
 
 export const publishVideo = async (req, res) => {
     try {
-        console.log("Publishing video");
 
         const { title, description } = req.body;
-        console.log("req.user", req.user);
-
         const userId = req.user._id
-        console.log("userId", userId);
-
 
         if (!userId) {
             return res.status(400).json({
@@ -22,19 +17,12 @@ export const publishVideo = async (req, res) => {
         const videoLocalPath = req.files.video[0].path;
         const thumbnailLocalPath = req.files.thumbnail[0].path;
 
-
-        console.log(title, description, videoLocalPath, thumbnailLocalPath);
-
-
         if (!title || !description || !videoLocalPath || !thumbnailLocalPath) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
         const video = await uploadOnCloudinary(videoLocalPath);
         const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
-
-        console.log(video.secure_url, thumbnail.secure_url);
-
 
         const createdVideo = await Video.create({
             title,
@@ -72,8 +60,6 @@ export const getAllVideos = async (req, res) => {
 
     try {
         const userId = req.user._id
-        console.log("de raha hain", userId);
-
 
         if (!userId) {
             return res.status(400).json({

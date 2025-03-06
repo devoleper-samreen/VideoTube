@@ -19,8 +19,13 @@ import ChangePassword from "./components/ChangePassword"
 import Dashboard from "./components/Dashboard"
 import YourVideos from './components/YourVideos';
 import WatchedVideos from "./components/WatchedVideos"
+import { useGetMeQuery } from "../redux/api/auth";
 
 function App() {
+  const { data, isLoading, isError, error } = useGetMeQuery();
+
+  console.log(error);
+
   return (
     <div>
 

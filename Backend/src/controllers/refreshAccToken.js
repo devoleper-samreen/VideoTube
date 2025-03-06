@@ -12,9 +12,7 @@ export const refreshAccessToken = async (req, res) => {
     }
 
     try {
-        console.log(process.env.REFRESH_TOKEN_SECRET)
         const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
-        console.log(decodedToken)
 
         if (!decodedToken) {
             return res.status(401).json({

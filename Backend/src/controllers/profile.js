@@ -18,10 +18,8 @@ export const getProfile = async (req, res) => {
         const profile = await Profile.findOne({
             userDetail: userId
         }).populate("userDetail", "name email");
-        console.log("Profile Found:", profile);
 
         if (!profile) {
-            console.log("Profile not found, creating a new profile...");
             profile = await Profile.create({
                 userDetail: userId,
                 description: "",
@@ -29,7 +27,6 @@ export const getProfile = async (req, res) => {
                 coverImage: "",
             });
 
-            console.log("New Profile Created:", profile);
         }
 
         return res.status(200).json({

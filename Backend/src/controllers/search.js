@@ -3,7 +3,6 @@ import { Video } from "../models/video.js";
 export const searchVideos = async (req, res) => {
     try {
         const query = req.query.q;
-        console.log("Query", query);
 
         const videos = await Video.aggregate([
             // Owner ka data lao
