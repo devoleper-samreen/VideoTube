@@ -6,6 +6,7 @@ import { profileApi } from "./api/profileApi";
 import { searchApi } from "./api/searchApi";
 import { likeApi } from "./api/likeApi";
 import { commentApi } from "./api/commentApi"
+import { dashboardApi } from "./api/dashboardApi"
 
 export const store = configureStore({
     reducer: {
@@ -16,7 +17,8 @@ export const store = configureStore({
         [searchApi.reducerPath]: searchApi.reducer,
         [likeApi.reducerPath]: likeApi.reducer,
         [commentApi.reducerPath]: commentApi.reducer,
+        [dashboardApi.reducerPath]: dashboardApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApi.middleware, videoApi.middleware, uploadApi.middleware, profileApi.middleware, searchApi.middleware, likeApi.middleware, commentApi.middleware),
+        getDefaultMiddleware().concat(authApi.middleware, videoApi.middleware, uploadApi.middleware, profileApi.middleware, searchApi.middleware, likeApi.middleware, commentApi.middleware, dashboardApi.middleware),
 });

@@ -11,6 +11,7 @@ import likeRoute from "./routes/like.js"
 import feedRoute from "./routes/feed.js"
 import playlistRoute from "./routes/playlist.js"
 import searchRoute from "./routes/search.js"
+import dashboardRoute from "./routes/dashboard.js"
 
 dotenv.config(
     {
@@ -48,6 +49,7 @@ app.use("/api/likes", likeRoute)
 app.use("/api/comment", commentRoute)
 app.use("/api/playlist", playlistRoute)
 app.use("/api/search", searchRoute)
+app.use("/api/dashboard", dashboardRoute)
 
 connectDB();
 
