@@ -1,6 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-// import Search from './components/Search';
-import PlayingVideo from './components/PlayingVideo';
 import './App.css';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -19,29 +17,20 @@ import ChangePassword from "./components/ChangePassword"
 import Dashboard from "./components/Dashboard"
 import YourVideos from './components/YourVideos';
 import WatchedVideos from "./components/WatchedVideos"
-import { useGetMeQuery } from "../redux/api/auth";
 
 function App() {
-  const { data, isLoading, isError, error } = useGetMeQuery();
-
-  console.log(error);
 
   return (
     <div>
-
-      {/* <ListItems /> */}
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         {/* routes with navbar and sidebar */}
         <Route path='/' element={<Layout />} >
           <Route index element={<Feed />} />
           <Route path='/search' element={<Feed />} />
-          {/* <Route path="/search/:searchQuery" element={<Search />} /> */}
-          <Route path="/playing" element={<PlayingVideo />} />
 
           {/* Protected Route */}
           <Route element={<ProtectedRoute />}>
-            {/* <Route path='/' element={<Feed />} /> */}
             <Route path="/profile" element={<Profile />} />
             <Route path='/change-password' element={<ChangePassword />} />
             <Route path='/dashboard' element={<Dashboard />} />

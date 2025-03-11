@@ -48,8 +48,6 @@ const Upload = () => {
         }
     };
 
-
-
     const handleUpload = async () => {
         if (!title || !description || !video || !thumbnail) {
             alert("All fields are required");

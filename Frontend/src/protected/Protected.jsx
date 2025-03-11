@@ -1,17 +1,9 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useGetMeQuery } from "../../redux/api/auth";
-import { useEffect } from "react";
 import Loader from "../components/loader"
 
 const ProtectedRoute = () => {
-    const { data: user, refetch, isLoading } = useGetMeQuery();
-    const location = useLocation();
-
-    //just for testing
-    // useEffect(() => {
-    //     refetch();
-    //     console.log('fetching user:', user);
-    // }, [location.pathname, refetch]);
+    const { data: user, isLoading } = useGetMeQuery();
 
     if (isLoading) {
         console.log('fetching user:', user);

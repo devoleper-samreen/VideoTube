@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useGetMeQuery } from "../../redux/api/auth";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useGetProfileQuery } from "../../redux/api/auth";
+import { useGetProfileQuery } from "../../redux/api/profileApi";
 
 
 function Navbar({ toggleSidebar }) {

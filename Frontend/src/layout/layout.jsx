@@ -17,7 +17,6 @@ const Layout = () => {
                 <Sidebar isOpen={isSidebarOpen} />
                 <div className="w-[1000px] ml-2 flex-1 overflow-y-auto h-[540px]">
                     <Outlet />
-
                 </div>
             </div>
         </div>

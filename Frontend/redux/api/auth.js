@@ -4,6 +4,7 @@ import customBaseQuery from "./baseApi";
 export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: customBaseQuery,
+    tagTypes: ["User"],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({
@@ -11,6 +12,7 @@ export const authApi = createApi({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags: ["User"]
         }),
         register: builder.mutation({
             query: (data) => ({
@@ -18,12 +20,14 @@ export const authApi = createApi({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags: ["User"],
         }),
         logout: builder.mutation({
             query: () => ({
                 url: "user/logout",
                 method: "POST",
             }),
+            invalidatesTags: ["User"],
         }),
         otpVerify: builder.mutation({
             query: (data) => ({
@@ -52,12 +56,12 @@ export const authApi = createApi({
                 method: "PATCH",
                 body: data,
             }),
+            invalidatesTags: ["User"],
         }),
         getMe: builder.query({
-            query: () => "user/me"
-        }),
-        getProfile: builder.query({
-            query: () => "user/profile",
+            query: () => "user/me",
+            providesTags: ["User"],
+            keepUnusedDataFor: 300
         }),
     })
 });

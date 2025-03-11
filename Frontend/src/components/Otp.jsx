@@ -6,12 +6,12 @@ import { toast } from "react-hot-toast";
 import Loader from "./loader"
 
 
-const OTPInput = ({ onVerify }) => {
+const OTPInput = () => {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState(new Array(4).fill(""));
     const inputRefs = useRef([]);
     const navigate = useNavigate();
-    const [otpVerify, { isLoading, isError, isSuccess }] = useOtpVerifyMutation()
+    const [otpVerify, { isLoading }] = useOtpVerifyMutation()
 
     const handleChange = (e, index) => {
         const value = e.target.value;

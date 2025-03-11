@@ -15,10 +15,13 @@ const ProfileUpdate = () => {
     const [profilePic, setProfilePic] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
 
-    const [updateProfile, { isLoading, success }] = useUpdateProfileMutation();
+    const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const handleFileChange = (e, setImage) => {

@@ -1,19 +1,13 @@
-import { useGetProfileQuery } from "../../redux/api/auth";
+import { useGetProfileQuery } from "../../redux/api/profileApi";
 import { Skeleton, Stack } from "@mui/material";
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { data, isLoading, refetch } = useGetProfileQuery();
-    const { profile } = data;
-
-    useEffect(() => {
-        refetch();
-    }, [data]);
-
+    const { data, isLoading } = useGetProfileQuery();
+    // const { profile } = data;
 
     if (isLoading) {
         return (
@@ -57,13 +51,13 @@ const Profile = () => {
             {/* Cover Image */}
             <div className="relative">
                 <img
-                    src={profile?.coverImage || ''}
+                    src={data?.profile?.coverImage || ''}
                     alt="Cover"
                     className="w-full h-52 object-cover rounded-lg bg-gray-100"
                 />
                 {/* User Picture */}
                 <img
-                    src={profile.profilePicture || ''}
+                    src={data?.profile?.profilePicture || ''}
                     alt="User"
                     className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-12"
                 />
@@ -96,16 +90,16 @@ const Profile = () => {
 
                 <h2 className="text-xl font-bold mb-4">Name</h2>
                 <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
-                    {profile.userDetail.name}
+                    {data?.profile?.userDetail.name}
                 </p>
                 <h2 className="text-xl font-bold mb-4">Email Address</h2>
                 <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
-                    {profile.userDetail.email}
+                    {data?.profile?.userDetail.email}
                 </p>
 
                 <h2 className="text-xl font-bold mb-4">Description</h2>
                 <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
-                    {profile.description || 'No description'}
+                    {data?.profile?.description || 'No description'}
                 </p>
             </div>
 

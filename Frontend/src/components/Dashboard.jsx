@@ -4,17 +4,7 @@ import { useGetStatsQuery, useDeleteVideoMutation } from "../../redux/api/dashbo
 
 const Dashboard = () => {
     const { data: stats, isLoading } = useGetStatsQuery();
-    const [deleteVideo] = useDeleteVideoMutation();
 
-    const handleDelete = async (videoId) => {
-        try {
-            await deleteVideo({ userId: "USER_ID", videoId }).unwrap();
-            alert("Video deleted successfully!");
-        } catch (error) {
-            console.error(error);
-            alert("Failed to delete video.");
-        }
-    };
 
     return (
         <div className="p-6 max-w-4xl mx-auto">
