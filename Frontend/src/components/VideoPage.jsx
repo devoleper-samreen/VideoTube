@@ -12,7 +12,7 @@ const VideoPage = () => {
     const { videoId } = useParams();
     const { data, error, isLoading } = useGetVideoByIdQuery(videoId);
 
-    const { data: likesData, refetch } = useGetLikesCountByVideoQuery(videoId);
+    const { data: likesData } = useGetLikesCountByVideoQuery(videoId);
 
     const [addLike] = useAddLikeMutation();
     const [deleteLike] = useDeleteLikeMutation();
@@ -42,7 +42,6 @@ const VideoPage = () => {
             await deleteLike(videoId);
             setLiked(false);
         }
-        refetch(); // refresh like count
     };
 
     if (isLoading) return <CircularProgress className="flex justify-center mt-4" />;
