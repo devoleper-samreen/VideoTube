@@ -1,122 +1,92 @@
-import PropTypes from 'prop-types';
 import { GoHome } from "react-icons/go";
 import { AiOutlineLike } from "react-icons/ai";
-import { FaChevronRight } from "react-icons/fa6";
 import { BiVideo } from "react-icons/bi";
 import { MdOutlineLogout } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
-import { Link } from 'react-router-dom';
-import { useLogoutMutation } from "../../redux/api/auth"
-import { toast } from 'react-hot-toast';
+import { Link } from "react-router-dom";
+import { useLogoutMutation } from "../../redux/api/auth";
+import { toast } from "react-hot-toast";
 
+const sidebarLinks = [
+  {
+    title: "Main",
+    links: [{ name: "Home", icon: <GoHome />, path: "/" }],
+  },
+  {
+    title: "Library",
+    links: [
+      { name: "Your Videos", icon: <BiVideo />, path: "/your-videos" },
+      {
+        name: "Watched Videos",
+        icon: <AiOutlineLike />,
+        path: "/watched-videos",
+      },
+    ],
+  },
+  {
+    title: "Creator Tools",
+    links: [{ name: "Dashboard", icon: <RxDashboard />, path: "/dashboard" }],
+  },
+];
 
-function Sidebar({ isOpen }) {
+function Sidebar() {
   const [logout] = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
       await logout();
-      toast.success('Logged out successfully');
+      toast.success("Logged out successfully");
       window.location.href = "/";
-
-
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  }
-
-  const sidebarItems2 = [
-
-    {
-      id: 4,
-      name: "Your Videos",
-      icon: <BiVideo />,
-      path: '/your-videos'
-    },
-
-    {
-      id: 6,
-      name: "Watched videos",
-      icon: <AiOutlineLike />,
-      path: "/watched-videos"
-    },
-
-  ];
-
+  };
 
   return (
-    <div
-      className={`h-[calc(100vh-56px)] border-r-2  border-r-gray-200 bg-white transition-all duration-300 overflow-y-auto shadow-md
-      ${isOpen ? 'w-50' : 'w-0'} ${isOpen ? 'p-5' : 'p-0'}`}
-      id='sidebar'
-    >
-      {/* Home */}
-      <div className="space-y-4 items-center">
-        <Link to='/'>
-          <div
-            className={`flex items-center space-x-6 duration-300 py-3 px-2 mt-3 rounded-2xl  ${isOpen && "hover:bg-gray-300"}`}
-          >
-            <div className="text-xl cursor-pointer"><GoHome /></div>
-            <span className="cursor-pointer">Home</span>
+    <aside className="w-60 h-[calc(100vh-56px)] bg-[#fdfdfd] border-r border-gray-200 p-5 flex flex-col shadow-md">
+      <div className="mb-8">
+        <h1 className="text-xl font-bold tracking-wide text-gray-800">
+          🎥 VideoTube
+        </h1>
+      </div>
+
+      <div className="flex-grow space-y-8">
+        {sidebarLinks.map((section, index) => (
+          <div key={index}>
+            <h2 className="text-xs font-semibold text-gray-500 uppercase mb-3 px-2">
+              {section.title}
+            </h2>
+            <ul className="space-y-1">
+              {section.links.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-100 transition-all duration-200 text-gray-700 font-medium text-sm"
+                  >
+                    <span className="text-lg text-red-600">{item.icon}</span>
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </Link>
+        ))}
       </div>
-      <br />
-      <hr />
-      {/* You */}
-      <div className="mt-4 space-y-3 items-center">
-        <div className="flex items-center space-x-2 mb-6">
-          <h1>You</h1>
-          <FaChevronRight />
-        </div>
-        {sidebarItems2.map((item) => {
-          return (
-            <Link
-              key={item.id} to={item.path}
-              className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
-            >
-              <div className="text-xl cursor-pointer">{item.icon}</div>
-              <span className="cursor-pointer">{item.name}</span>
-            </Link>
-          );
-        })}
-      </div>
-      <br />
-      <hr />
 
-      {/* dashboard & logout */}
-      <div className="mt-4 space-y-3 items-center">
-        <div className="items-center space-x-2">
-          {isOpen && <h1 className=" font-semibold mb-6">Go For</h1>}
-        </div>
-
-        <Link
-          to='/dashboard'
-          className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
-        >
-          <div className="text-xl cursor-pointer"><RxDashboard /></div>
-          <span className="cursor-pointer">Dashboard</span>
-        </Link>
-
-        <Link
+      <div className="mt-auto pt-6 border-t border-gray-200">
+        <button
           onClick={handleLogout}
-          className={`flex items-center space-x-6 duration-300 rounded-xl py-2 px-2 ${isOpen && "hover:bg-gray-300"}`}
+          className="w-full flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-red-50 transition-all duration-200 text-gray-700 font-medium text-sm"
         >
-          <div className="text-xl cursor-pointer"><MdOutlineLogout /></div>
-          <span className="cursor-pointer">Logout</span>
-        </Link>
-
+          <MdOutlineLogout className="text-lg text-red-600" />
+          Logout
+        </button>
+        <p className="text-xs text-gray-400 text-center mt-6">
+          © 2025 VideoTube
+        </p>
       </div>
-      <br />
-      <hr />
-
-      {isOpen && <p className="text-xs text-gray-500 mt-6 text-center">© 2025 VideoTube</p>}
-
-    </div >
+    </aside>
   );
 }
-Sidebar.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-};
 
 export default Sidebar;
