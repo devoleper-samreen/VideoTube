@@ -1,110 +1,164 @@
 import { useGetProfileQuery } from "../../redux/api/profileApi";
-import { Skeleton, Stack } from "@mui/material";
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import {
+  Skeleton,
+  Stack,
+  Box,
+  Avatar,
+  Typography,
+  Button,
+  Grid,
+  Divider,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-    const navigate = useNavigate();
-    const { data, isLoading } = useGetProfileQuery();
-    // const { profile } = data;
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetProfileQuery();
 
-    if (isLoading) {
-        return (
-            <div className="w-[100%] p-4 mt-2 shadow-md">
-                {/* Skeleton for Cover Image */}
-                <Skeleton variant="rectangular" width="100%" height={208} className="rounded-lg" />
-
-                {/* Skeleton for Profile Picture */}
-                <div className="relative flex justify-center">
-                    <Skeleton
-                        variant="circular"
-                        width={128}
-                        height={128}
-                        className="absolute -top-16"
-                    />
-                </div>
-
-                {/* Skeleton for Buttons */}
-                <div className="mt-20 mb-6 flex justify-end gap-4">
-                    <Skeleton variant="rectangular" width={120} height={40} />
-                    <Skeleton variant="rectangular" width={150} height={40} />
-                </div>
-
-                {/* Skeleton for Name */}
-                <Skeleton width="30%" height={30} className="mb-4" />
-                <Skeleton width="50%" height={25} className="mb-10" />
-
-                {/* Skeleton for Email */}
-                <Skeleton width="40%" height={30} className="mb-4" />
-                <Skeleton width="60%" height={25} className="mb-10" />
-
-                {/* Skeleton for Description */}
-                <Skeleton width="35%" height={30} className="mb-4" />
-                <Skeleton width="80%" height={60} className="mb-10" />
-            </div>
-        );
-    }
-
+  if (isLoading) {
     return (
-        <div className="w-[100%] p-4 mt-2 shadow-md">
-            {/* Cover Image */}
-            <div className="relative">
-                <img
-                    src={data?.profile?.coverImage || ''}
-                    alt="Cover"
-                    className="w-full h-52 object-cover rounded-lg bg-gray-100"
-                />
-                {/* User Picture */}
-                <img
-                    src={data?.profile?.profilePicture || ''}
-                    alt="User"
-                    className="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 -bottom-12"
-                />
-            </div>
-
-            {/* User Info */}
-            <div className="mt-26 ml-8 border-t-4 rounded pt-6">
-                <Stack direction="column" spacing={2}>
-                    <Link to="/edit-profile">
-                        <Button
-                            onClick={() => navigate('/edit-profile')}
-                            variant="contained"
-                            color="primary"
-                            sx={{ textTransform: 'none', float: 'right', textAlign: 'center' }}
-                        >
-                            Edit Profile
-
-                        </Button>
-                    </Link>
-                    <Link to='/change-password'>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ textTransform: 'none', float: 'right' }}
-                        >
-                            change password
-                        </Button>
-                    </Link>
-                </Stack>
-
-                <h2 className="text-xl font-bold mb-4">Name</h2>
-                <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
-                    {data?.profile?.userDetail.name}
-                </p>
-                <h2 className="text-xl font-bold mb-4">Email Address</h2>
-                <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
-                    {data?.profile?.userDetail.email}
-                </p>
-
-                <h2 className="text-xl font-bold mb-4">Description</h2>
-                <p className="text-lg text-gray-500 mb-10 border py-2 px-8 w-fit rounded-lg">
-                    {data?.profile?.description || 'No description'}
-                </p>
-            </div>
-
-        </div>
+      <Box sx={{ p: 4, mt: 4 }}>
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={208}
+          sx={{ borderRadius: 2 }}
+        />
+        <Box sx={{ display: "flex", justifyContent: "center", mt: -8 }}>
+          <Skeleton variant="circular" width={128} height={128} />
+        </Box>
+        <Skeleton width={180} height={40} sx={{ mt: 3 }} />
+        <Skeleton width={300} height={30} sx={{ mt: 2 }} />
+        <Skeleton width={400} height={60} sx={{ mt: 2 }} />
+      </Box>
     );
+  }
+
+  return (
+    <Box sx={{ width: "100%", px: 4, mt: 6 }}>
+      {/* Cover Image */}
+      <Box
+        sx={{
+          position: "relative",
+          height: 208,
+          borderRadius: 3,
+          overflow: "hidden",
+          mb: 10,
+          boxShadow: 2,
+        }}
+      >
+        <img
+          src={data?.profile?.coverImage || ""}
+          alt="cover"
+          className="w-full h-full object-cover"
+        />
+        <Avatar
+          src={data?.profile?.profilePicture || ""}
+          sx={{
+            width: 128,
+            height: 128,
+            position: "absolute",
+            bottom: -64,
+            left: "50%",
+            transform: "translateX(-50%)",
+            border: "4px solid white",
+            boxShadow: 3,
+          }}
+        />
+      </Box>
+
+      {/* Profile Content */}
+      <Box sx={{ mt: 10, maxWidth: 900, mx: "auto", px: 2 }}>
+        <Box sx={{ textAlign: "center", mb: 4 }}>
+          <Typography variant="h4" fontWeight={600} color="primary.main">
+            {data?.profile?.userDetail.name}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {data?.profile?.userDetail.email}
+          </Typography>
+        </Box>
+
+        <Typography variant="h6" gutterBottom fontWeight={600}>
+          About Me
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+          {data?.profile?.description || "No description"}
+        </Typography>
+
+        <Grid container spacing={3}>
+          <Grid item xs={6} md={4}>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 2,
+                bgcolor: "#f5f5f5",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h6">🎬</Typography>
+              <Typography variant="subtitle1" fontWeight={600}>
+                Total Videos
+              </Typography>
+              <Typography variant="body2">12</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} md={4}>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 2,
+                bgcolor: "#f5f5f5",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h6">👁️‍🗨️</Typography>
+              <Typography variant="subtitle1" fontWeight={600}>
+                Watched Videos
+              </Typography>
+              <Typography variant="body2">34</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 2,
+                bgcolor: "#f5f5f5",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h6">🧾</Typography>
+              <Typography variant="subtitle1" fontWeight={600}>
+                To-Do Tasks
+              </Typography>
+              <Typography variant="body2">5 Pending</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Divider sx={{ my: 4 }} />
+
+        <Stack direction="row" spacing={2} justifyContent="center">
+          <Button
+            onClick={() => navigate("/edit-profile")}
+            variant="outlined"
+            color="primary"
+            sx={{ textTransform: "none" }}
+          >
+            ✏️ Edit Profile
+          </Button>
+          <Button
+            onClick={() => navigate("/change-password")}
+            variant="contained"
+            color="primary"
+            sx={{ textTransform: "none" }}
+          >
+            🔐 Change Password
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
+  );
 };
 
 export default Profile;
